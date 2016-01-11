@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Basic Page Needs
+        ================================================== -->
+        <meta charset="utf-8">
+        <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>JChat</title>
+
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css"  href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="font-awesome-4.2.0/css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="css/jasny-bootstrap.min.css">
+
+
+        <!-- Stylesheet
+        ================================================== -->
+        <link rel="stylesheet" type="text/css"  href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/responsive.css">
+        <link rel="stylesheet" type="text/css" href="css/pageload.css">
+
+
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    </head>
+    <body>
+
+    <!-- Off Canvas Navigation
+    ================================================== -->
+    <div class="navmenu navmenu-default navmenu-fixed-left offcanvas"> <!--- Off Canvas Side Menu -->
+        <div class="close" data-toggle="offcanvas" data-target=".navmenu">
+            <span class="fa fa-close"></span>
+        </div>
+        <div class="add-margin"></div>
+        <ul class="nav navmenu-nav"> <!--- Menu -->
+            <li><a href="#home" class="page-scroll">Home</a></li>
+            <li><a href="#meet-us" class="page-scroll">Overview</a></li>
+            <li><a href="#services" class="page-scroll">Services</a></li>
+            <li><a href="#works" class="page-scroll">Portfolio</a></li>
+            <li><a href="#about-us" class="page-scroll">About Us</a></li>
+            <li><a href="#contact" class="page-scroll">Contact Us</a></li>
+        </ul><!--- End Menu -->
+    </div> <!--- End Off Canvas Side Menu -->
+
+    <!-- Home Section -->
+    <div id="home" class="initial-hide">
+        <div class="container text-center">
+            <!-- Navigation -->
+            <nav id="menu" data-toggle="offcanvas" data-target=".navmenu">
+                <span class="fa fa-comments"></span>
+            </nav>
+            <div class="btn-group">
+                <a href="" class="register__button">Sign up now</a>
+                <a href="" class="login__button">Sign in</a>
+            </div>
+
+            <div class="content">
+                <h4>Welcome to J.Chat</h4>
+                <hr>
+                <div class="header-text btn">
+                    <h1><span id="head-title"></span></h1>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Javascripts
+    ================================================== -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="javascripts/jasny-bootstrap.min.js"></script>
+
+    <script src="javascripts/typed.js"></script>
+
+    <script>
+        //pageload configuration
+        paceOptions = {
+            initialRate:0.7,
+            minTime:1000,
+            ghostTime: 500
+        }
+    </script>
+    <!--page loader -->
+    <script type="text/javascript" src="javascripts/pace.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+        //page load fadeout, and entire page fadein
+        Pace.on("hide", function(){
+            $('.initial-hide').fadeIn(1100);
+        });
+
+        $(function(){
+            $("#head-title").typed({
+                strings: ["Xiaoyong Jiang's Project^1000", "Powered with Node.JS React.JS MongoDB^1000"],
+                typeSpeed: 100,
+                loop: true,
+                startDelay: 100
+            });
+        });
+    </script>
+
+    </body>
+</html>

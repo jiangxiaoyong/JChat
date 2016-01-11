@@ -1,0 +1,15 @@
+{
+  "name": "JChat",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+
+    "express": "~4.13.1",
+    "ejs": "latest",
+    "gravatar": "latest",
+    "socket.io": "latest"
+  }
+}

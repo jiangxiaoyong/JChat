@@ -1,0 +1,54 @@
+@media only screen and (max-width: 608px){
+nav#menu span.fa.fa-bars {
+left: 60px;
+}
+.header-text.btn {
+height: auto;
+white-space: inherit;
+}
+.hover-bg .hover-text {
+padding: 15% 0;
+}
+}
+
+@media only screen and (max-width: 460px){
+h3 {
+    font-size: 12px;
+}
+nav#menu span.fa.fa-bars {
+left: 30px;
+}
+.content {
+padding-top: 30%;
+}
+.hover-bg .hover-text {
+padding: 20% 0;
+}
+#overview-video .overlay {
+    padding: 30% 0px;
+}
+}
+@media only screen and (max-width: 360px){
+h1 {
+    font-size: 36px;
+}
+h3 {
+    font-size: 11px;
+}
+hover-bg .hover-text {
+    padding: 25% 0px;
+}
+.pull-left,
+.pull-right {
+    float: none !important;
+    text-align: center;
+}
+}
+@media only screen and (max-width: 320px){
+h1 {
+    font-size: 30px;
+}
+hover-bg .hover-text {
+    padding: 30% 0px;
+}
+}
