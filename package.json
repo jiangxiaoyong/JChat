@@ -10,7 +10,7 @@
     "express": "~4.13.1",
     "ejs": "latest",
     "gravatar": "latest",
-    "socket.io": "latest",
+    "socket.io": "1.3.5",
     "passport": "latest",
     "passport-local": "latest",
     "connect-flash": "latest",

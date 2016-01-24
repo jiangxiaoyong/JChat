@@ -11,11 +11,11 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
 //MongoDB configuration
-//var configDB = require('./config/database.js');
-//mongoose.connect(configDB.url); // connect to our database
+var configDB = require('./config/database.js');
+mongoose.connect(configDB.url); // connect to our database
 
 //import configuration of Passport authentication
-//require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -39,7 +39,8 @@ console.log('Your application is running on http://localhost:' + port);
 // Require the configuration and the routes files, and pass
 // the app and io as arguments to the returned functions.
 require('./config')(app, io);
-require('./routes/routes')(app, io, passport);
+require('./routes/auth')(app, passport);
+require('./routes/routes')(app, io);
 
 //error handle
 

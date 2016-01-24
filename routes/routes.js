@@ -13,13 +13,13 @@ var gravatar = require('gravatar');
 // Export a function, so that we can pass
 // the app and io instances from the app.js file:
 
-module.exports = function(app,io,passport){
+module.exports = function(app,io){
 
-    app.get('/', function(req, res){
+    /*app.get('/', function(req, res){
 
         // Render views/home.html
-        res.render('index');
-    });
+        res.render('home');
+    });*/
 
     app.get('/create', function(req,res){
 
