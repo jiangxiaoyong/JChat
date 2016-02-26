@@ -15,11 +15,11 @@ var gravatar = require('gravatar');
 
 module.exports = function(app,io){
 
-    /*app.get('/', function(req, res){
+    app.get('/', function(req, res){
 
         // Render views/home.html
         res.render('home');
-    });*/
+    });
 
     app.get('/create', function(req,res){
 

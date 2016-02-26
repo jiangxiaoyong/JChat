@@ -3,11 +3,11 @@
 // This is The Scripts used for ___________ Theme
 //
 //
-
+'use strict';
 function main() {
 
 (function () {
-   'use strict';
+
 
    /*====================================
     Page a Link Smooth Scrolling 
