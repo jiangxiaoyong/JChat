@@ -2,9 +2,17 @@
 var gulp   = require('gulp'),
     jshint = require('gulp-jshint');
     stylish = require('jshint-stylish');
+    webpack = require('gulp-webpack');
+    uglify = require('gulp-uglify');
+    rename = require('gulp-rename');
     path = {
-        js : ['./public/javascripts/*.js']
+        js : './public/javascripts/*.js',
+        entry : './public/javascripts/main.js',
+        dest : './public/dest/'
     }
+
+//webpack config file
+var webpackConfig = require('./webpack.config');
 
 // define the default task and add the watch task to it
 gulp.task('default', ['watch']);
@@ -16,7 +24,19 @@ gulp.task('jshint', function() {
         .pipe(jshint.reporter(stylish));
 });
 
+// configure the webpack task
+gulp.task('webpack', function() {
+   return  gulp.src(path.entry)
+        .pipe(webpack(webpackConfig))
+        .pipe(gulp.dest(path.dest))
+        .pipe(rename('all.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(path.dest));
+});
+
+
 // configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function() {
-    gulp.watch('./public/javascripts/*.js', ['jshint']);
+    gulp.watch(path.js, ['jshint']);
+    gulp.watch(path.js, ['webpack']);
 });
