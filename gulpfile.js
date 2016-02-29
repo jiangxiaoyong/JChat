@@ -6,9 +6,9 @@ var gulp   = require('gulp'),
     uglify = require('gulp-uglify');
     rename = require('gulp-rename');
     path = {
-        js : './public/javascripts/*.js',
-        entry : './public/javascripts/main.js',
-        dest : './public/dest/'
+        js : './public/javascripts/*.js', //all subfolder and files located in javascripts
+        entry : './public/javascripts/chat.js',
+        dest : './public/build/'
     }
 
 //webpack config file
@@ -25,15 +25,21 @@ gulp.task('jshint', function() {
 });
 
 // configure the webpack task
-gulp.task('webpack', function() {
+/*gulp.task('webpack', function() {
    return  gulp.src(path.entry)
         .pipe(webpack(webpackConfig))
         .pipe(gulp.dest(path.dest))
         .pipe(rename('all.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(path.dest));
-});
+});*/
 
+gulp.task('webpack', function() {
+ return  gulp.src(path.entry)
+         .pipe(webpack(webpackConfig))
+         .pipe(gulp.dest(path.dest));
+
+ });
 
 // configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function() {
