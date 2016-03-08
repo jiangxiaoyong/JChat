@@ -8,7 +8,8 @@ module.exports = {
     devtool: "source-map", // for debugging
     entry: {
         //index: './public/javascripts/home.js',
-        auth: './public/javascripts/auth.js'
+        //auth: './public/javascripts/auth.js'
+        todo: './public/javascripts/index.js'
         //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
     },
     output: {
@@ -17,8 +18,14 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.js$/, loader: 'babel-loader' },
-            { test: /\.js$/, loader: 'jsx-loader' }
+            /*{ test: /\.js$/, loader: 'babel-loader' },
+            { test: /\.js$/, loader: 'jsx-loader' }*/
+            {
+                test: /\.js$/,
+                loaders: ['babel?presets[]=es2015&presets[]=react'],
+                exclude: /node_modules/,
+                include: __dirname
+            }
         ]
     },
     resolve: {
@@ -42,7 +49,8 @@ module.exports = {
 
         new webpack.optimize.CommonsChunkPlugin('common.js'), // extract common part of module
 
-        new webpack.optimize.UglifyJsPlugin({minimize: true}) //minimized file
+        //new webpack.optimize.UglifyJsPlugin({minimize: true}) //minimized file
+
     ]
 
 };

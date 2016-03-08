@@ -6,7 +6,7 @@ var gulp   = require('gulp'),
     uglify = require('gulp-uglify');
     rename = require('gulp-rename');
     path = {
-        js : './public/javascripts/*.js', //all subfolder and files located in javascripts
+        js : './public/javascripts/**/*.js', //all subfolder and files located in javascripts
         entry : './public/javascripts/chat.js',
         dest : './public/build/'
     }
@@ -43,6 +43,6 @@ gulp.task('webpack', function() {
 
 // configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function() {
-    gulp.watch(path.js, ['jshint']);
+    //gulp.watch(path.js, ['jshint']);
     gulp.watch(path.js, ['webpack']);
 });

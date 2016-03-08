@@ -2,7 +2,7 @@
  * Created by jxy on 02/01/16.
  */
 
-// This file is required by app.js. It sets up event listeners
+// This file is required by App.js. It sets up event listeners
 // for the two main URL endpoints of the application - /create and /chat/:id
 // and listens for socket.io messages.
 
@@ -11,14 +11,14 @@
 var gravatar = require('gravatar');
 
 // Export a function, so that we can pass
-// the app and io instances from the app.js file:
+// the app and io instances from the App.js file:
 
 module.exports = function(app,io){
 
     app.get('/', function(req, res){
 
         // Render views/home.html
-        res.render('home');
+        res.render('todo');
     });
 
     app.get('/create', function(req,res){
