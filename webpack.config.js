@@ -7,13 +7,18 @@ var path = require('path');
 module.exports = {
     devtool: "source-map", // for debugging
     entry: {
-        //index: './public/javascripts/home.js',
-        //auth: './public/javascripts/auth.js'
-        todo: './public/javascripts/index.js'
-        //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
+        todo:[
+            'webpack-dev-server/client?:3000',
+            'webpack/hot/only-dev-server',
+            //index: './public/javascripts/home.js',
+            //auth: './public/javascripts/auth.js'
+            './public/javascripts/index.js'
+            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
+        ]
+
     },
     output: {
-        path: __dirname,
+        path: __dirname + '/public/build',
         filename: '[name].bundle.js' //the real output path is specified in gulp config file
     },
     module: {
@@ -22,6 +27,7 @@ module.exports = {
             { test: /\.js$/, loader: 'jsx-loader' }*/
             {
                 test: /\.js$/,
+                //loaders: ['react-hot', 'babel?presets[]=es2015&presets[]=react'],
                 loaders: ['babel?presets[]=es2015&presets[]=react'],
                 exclude: /node_modules/,
                 include: __dirname
@@ -38,6 +44,10 @@ module.exports = {
             jquery: __dirname + '/public/javascripts/lib/jquery-1-12.min.js'
         }*/
     },
+    watchOptions: { //fix webpack watch mode does not work with commad webpack --watch
+        poll: 1000,
+        aggregateTimeout: 1000
+    },
     plugins: [
 
         new webpack.ProvidePlugin({
@@ -51,6 +61,7 @@ module.exports = {
 
         //new webpack.optimize.UglifyJsPlugin({minimize: true}) //minimized file
 
+        new webpack.HotModuleReplacementPlugin() //hot reload
     ]
 
 };
