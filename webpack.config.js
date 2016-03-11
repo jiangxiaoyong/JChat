@@ -3,12 +3,14 @@
  */
 var webpack = require('webpack');
 var path = require('path');
+var dockerMachineIP = 'http://192.168.99.100';
+var webpackDevServerPort = 3000;
 
 module.exports = {
     devtool: "source-map", // for debugging
     entry: {
         todo:[
-            'webpack-dev-server/client?:3000',
+            'webpack-dev-server/client?http://192.168.99.100:3000/',
             'webpack/hot/only-dev-server',
             //index: './public/javascripts/home.js',
             //auth: './public/javascripts/auth.js'
@@ -19,6 +21,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/public/build',
+        publicPath: 'http://192.168.99.100:3000/public/build/', //this path hold webpack hot reload compiled bundle code
         filename: '[name].bundle.js' //the real output path is specified in gulp config file
     },
     module: {
@@ -27,12 +30,22 @@ module.exports = {
             { test: /\.js$/, loader: 'jsx-loader' }*/
             {
                 test: /\.js$/,
-                //loaders: ['react-hot', 'babel?presets[]=es2015&presets[]=react'],
-                loaders: ['babel?presets[]=es2015&presets[]=react'],
+                loaders: ['react-hot', 'babel?presets[]=es2015&presets[]=react'],
+                //loaders: ['babel?presets[]=es2015&presets[]=react'],
                 exclude: /node_modules/,
                 include: __dirname
             }
         ]
+    },
+    devServer: {
+        //publicPath: 'http://192.168.99.100:3000',
+        host: '0.0.0.0', //in docker
+        port: '3000',//in docker
+        hot: true,
+        inline: true,
+        stats: {colors: true},
+        //used for cross origin request, like node running on 8080, will get data from webpack hot-reload webpack-dev-server running on 3000,
+        headers: {'Access-Control-Allow-Origin': 'http://192.168.99.100:8080','Access-Control-Allow-Credentials': 'true'}
     },
     resolve: {
         /*alias: {
@@ -61,7 +74,9 @@ module.exports = {
 
         //new webpack.optimize.UglifyJsPlugin({minimize: true}) //minimized file
 
-        new webpack.HotModuleReplacementPlugin() //hot reload
+        new webpack.HotModuleReplacementPlugin() ,//hot reload
+
+        //new webpack.NoErrorPlugin()
     ]
 
 };
