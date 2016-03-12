@@ -4,24 +4,24 @@
 var webpack = require('webpack');
 var path = require('path');
 var dockerMachineIP = 'http://192.168.99.100';
-var webpackDevServerPort = 3000;
+var webPackDevServerPort = 3000;
 
 module.exports = {
     devtool: "source-map", // for debugging
     entry: {
-        todo:[
-            'webpack-dev-server/client?http://192.168.99.100:3000/',
+        auth:[
+            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
             'webpack/hot/only-dev-server',
             //index: './public/javascripts/home.js',
             //auth: './public/javascripts/auth.js'
-            './public/javascripts/index.js'
+            './public/javascripts/auth.js'
             //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
         ]
 
     },
     output: {
         path: __dirname + '/public/build',
-        publicPath: 'http://192.168.99.100:3000/public/build/', //this path hold webpack hot reload compiled bundle code
+        publicPath: dockerMachineIP + ':' + webPackDevServerPort + '/public/build/', //this path hold webpack hot reload compiled bundle code
         filename: '[name].bundle.js' //the real output path is specified in gulp config file
     },
     module: {
@@ -63,7 +63,7 @@ module.exports = {
     },
     plugins: [
 
-        new webpack.ProvidePlugin({
+        new webpack.ProvidePlugin({ //ensure jquery available in bundle js file
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
@@ -76,7 +76,6 @@ module.exports = {
 
         new webpack.HotModuleReplacementPlugin() ,//hot reload
 
-        //new webpack.NoErrorPlugin()
     ]
 
 };
