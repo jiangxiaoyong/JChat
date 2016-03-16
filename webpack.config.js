@@ -9,6 +9,14 @@ var webPackDevServerPort = 3000;
 module.exports = {
     devtool: "source-map", // for debugging
     entry: {
+        todo:[
+            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
+            'webpack/hot/only-dev-server',
+            //index: './public/javascripts/home.js',
+            //auth: './public/javascripts/auth.js'
+            './public/javascripts/index.js'
+            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
+        ],
         auth:[
             'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
             'webpack/hot/only-dev-server',

@@ -1,14 +1,11 @@
-/**
- * Created by jxymacbook on 2016-03-06.
- */
+import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import todoApp from './reducers'
-import App from './components/App'
+import App from './containers/App'
+import configureStore from './store/configureStore'
 
-let store = createStore(todoApp)
+const store = configureStore()
 
 render(
     <Provider store={store}>

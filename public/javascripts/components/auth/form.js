@@ -49,7 +49,6 @@ Form = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
     form: 'login',                           // a unique name for this form
     fields: ['email', 'password'], // all the fields in your form
     validate,
-    asyncValidate
 })(Form);
 
 export default Form

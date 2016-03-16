@@ -1,11 +1,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import reducer from './reducers'
 import LoginForm from './components/auth/LoginForm'
+import configureStore from './store/configureStore'
 
-let store = createStore(reducer)
+let store = configureStore()
 
 render(
     <Provider store={store}>

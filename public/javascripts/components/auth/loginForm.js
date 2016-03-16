@@ -3,10 +3,14 @@
  */
 import React from 'react'
 import Form from '../../containers/auth/FormContainer'
+import Footer from './Footer'
 
 let LoginForm = () => (
-
-    <Form />
+    <div>
+        <Form />
+        <hr/>
+        <Footer />
+    </div>
 
 )
 
