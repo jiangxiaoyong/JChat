@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {reduxForm} from 'redux-form';
 
-const validate = values => {
+/*const validate = values => {
     const errors = {};
 
     if (!values.email) {
@@ -14,7 +14,7 @@ const validate = values => {
     }
 
     return errors;
-};
+};*/
 
 class Form extends Component {
 
@@ -48,7 +48,7 @@ class Form extends Component {
 Form = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
     form: 'login',                           // a unique name for this form
     fields: ['email', 'password'], // all the fields in your form
-    validate,
+   // validate,
 })(Form);
 
 export default Form

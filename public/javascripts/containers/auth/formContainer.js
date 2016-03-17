@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { initialize } from 'redux-form';
 import Form from '../../components/auth/Form';
+import { authUserInfo } from '../../actions'
 
-class submitForm extends React.Component {
+class submitForm extends Component {
 
     handleSubmit(data) {
         console.log('Submission received!', data);
-        //this.props.dispatch(initialize('login', {})); // clear form
+        this.props.dispatch(authUserInfo(data));
     }
 
     render() {
