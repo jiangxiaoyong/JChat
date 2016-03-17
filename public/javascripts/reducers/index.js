@@ -4,6 +4,7 @@ import {
     SELECT_REDDIT, INVALIDATE_REDDIT,
     REQUEST_POSTS, RECEIVE_POSTS
 } from '../actions'
+import authReducer from './auth/authReducer'
 
 function selectedReddit(state = 'reactjs', action) {
     switch (action.type) {
@@ -57,6 +58,7 @@ function postsByReddit(state = { }, action) {
 const rootReducer = combineReducers({
     postsByReddit,
     selectedReddit,
+    authReducer,
     form: formReducer
 })
 

@@ -70,10 +70,10 @@ export function fetchPostsIfNeeded(reddit) {
  ***************************** End of Example******************************
  */
 
-export function loginError(error) {
+export function loginFailed(response) {
     return {
         type: LOGGED_FAILED,
-        error
+        response
     }
 }
 
@@ -96,12 +96,9 @@ export function authUserInfo(usrInfo) {
         })
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
-                    console.log(response);
                     dispatch(loginSuccess(response));
                 } else {
-                    const error = new Error(response.statusText);
-                    error.response = response;
-                    dispatch(loginError(error));
+                    dispatch(loginFailed(response));
                 }
         })
             .catch( error => {

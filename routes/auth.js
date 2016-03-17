@@ -20,13 +20,20 @@ module.exports = function(app, passport) {
         res.render('login.ejs', { message: req.flash('loginMessage') });
     });
 
+    app.get('/loginFailure', function(req, res, next) {
 
+        //res.json({"foo": "bar"});
+        res.send(JSON.stringify({"foo": "bar"}))
+        //return res.send({ success : false, message : 'authentication failed' });
+    });
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+        //successRedirect : '/profile', // redirect to the secure profile section
+        //failureRedirect : '/login', // redirect back to the signup page if there is an error
+       // failureFlash : true // allow flash messages
+        })
+
+    );
 
     // =====================================
     // SIGNUP ==============================
