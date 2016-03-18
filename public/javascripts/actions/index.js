@@ -92,7 +92,8 @@ export function authUserInfo(usrInfo) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body:  JSON.stringify(usrInfo)
+            body:  JSON.stringify(usrInfo),
+            credentials: 'include' //Should you want to make a fetch request with credentials such as cookies, you should set the credentials of the request to “include”.
         })
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {

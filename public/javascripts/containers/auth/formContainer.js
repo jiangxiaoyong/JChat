@@ -12,11 +12,22 @@ class submitForm extends Component {
     }
 
     render() {
+        const  { authStatus } = this.props
         return (
-            <Form onSubmit={this.handleSubmit.bind(this)}/>
+            <Form onSubmit={this.handleSubmit.bind(this)}
+                  authStatus={authStatus}/>
         )
     }
 
 }
 
-export default connect()(submitForm);
+
+let mapStateToProps = (state) => {
+    return {
+        authStatus: state.authReducer
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(submitForm);
