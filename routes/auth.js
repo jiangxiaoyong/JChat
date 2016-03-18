@@ -22,13 +22,20 @@ module.exports = function(app, passport) {
     });
 
     // process the login form
-    app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        //failureRedirect : '/login', // redirect back to the signup page if there is an error
-       // failureFlash : true // allow flash messages
-        })
+    //app.post('/login', passport.authenticate('local-login', {
+    //    successRedirect : '/profile', // redirect to the secure profile section
+    //    //failureRedirect : '/login', // redirect back to the signup page if there is an error
+    //    // failureFlash : true // allow flash messages
+    //    })
+    //);
 
-    );
+     app.post('/login',
+            passport.authenticate('local-login'),
+            function(req, res){ //this function called only when authentication successful
+                res.json({'destPage': '/profile'}); //return redirect page
+            }
+
+        );
 
     // =====================================
     // SIGNUP ==============================
@@ -56,6 +63,7 @@ module.exports = function(app, passport) {
         res.render('profile.ejs', {
             user : req.user // get the user out of session and pass to template
         });
+        res.statusCode = 200;
     });
 
     // =====================================

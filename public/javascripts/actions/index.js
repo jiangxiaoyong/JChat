@@ -98,10 +98,14 @@ export function authUserInfo(usrInfo) {
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     dispatch(loginSuccess(response));
+                    return response.json();
                 } else {
                     dispatch(loginFailed(response));
                 }
         })
+            .then( json => {
+                window.location = json.destPage
+            })
             .catch( error => {
             console.log('POST user login authentication info failed: ' + error.message);
         });
