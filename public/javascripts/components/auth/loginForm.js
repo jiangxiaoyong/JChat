@@ -7,9 +7,12 @@ import Footer from './Footer'
 
 let LoginForm = () => (
     <div>
-        <Form />
+        <Form buttonText="Log in"
+                url="/login"/>
         <hr/>
-        <Footer />
+        <Footer text="Need an account? "
+                url="/signup"
+                linkText="Signup"/>
     </div>
 
 )

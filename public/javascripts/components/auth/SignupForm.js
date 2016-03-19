@@ -8,8 +8,8 @@ let SignupForm = () => (
                 url='/signup'/>
         <hr/>
         <Footer text="Already have an account? "
-                url="/"
-                linkText="Signup"/>
+                url="/login"
+                linkText="Login"/>
     </div>
 
 )

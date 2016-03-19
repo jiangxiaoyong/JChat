@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {reduxForm} from 'redux-form';
+import { Alert, Input, Button } from 'react-bootstrap';
 
 const validate = values => {
     const errors = {};
@@ -12,7 +13,7 @@ const validate = values => {
 
     if(!values.password){
 
-    }else if (values.password.length > 0 && values.password.length <=1 ) {
+    }else if (values.password.length > 0 && values.password.length <=3 ) {
         errors.password = ' Password too short';
     }
 
@@ -22,40 +23,34 @@ const validate = values => {
 class Form extends Component {
 
     render() {
-        const {fields: {email, password}, handleSubmit, authStatus} = this.props;
+        const {fields: {email, password}, handleSubmit, authStatus, buttonText} = this.props;
 
         return (
             <form onSubmit={handleSubmit} >
-                <div>
-                    {authStatus == 'INVALID' &&
-                    <div className="alert alert-danger">
-                        <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span className="sr-only">Error:</span>
-                        Wrong user name or password
-                    </div>}
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input type="text" className="form-control" name="email" placeholder="xxx@xxx.com" {...email}/>
-                    </div>
-                    {email.touched && email.error &&
-                    <div className="alert alert-danger">
-                        <span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span className="sr-only">Error:</span>
-                        {email.error}
-                    </div>}
-                </div>
-                <div>
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input type="password" className="form-control" name="password" {...password}/>
-                    </div>
-                    {password.touched && password.error &&
-                    <div className="alert alert-info">
-                        <strong>Warning!</strong>{password.error}
-                    </div>}
-                </div>
+                {authStatus == 'INVALID' &&
+                    <Alert bsStyle="danger" className="animated jello">
+                        <strong>Error: </strong>Wrong User Name or Password
+                    </Alert>
+                }
+                <Input type="email" label="Email Address" name='email' placeholder="Enter email" {...email}/>
+                {email.touched && email.error &&
+                <Alert bsStyle="danger" className="animated jello">
+                    <strong>Error: </strong> {email.error}
+                </Alert>
+                }
 
-                <button type="submit" className="btn btn-warning btn-lg">Login</button>
+                {authStatus == 'INVALID' ?
+                <Input type="password" label="Password" name="password" bsStyle="error" {...password} hasFeedback/>
+                :<Input type="password" label="Password" name="password" className='animated fadeInUp' {...password} />
+                }
+
+
+                {password.touched && password.error &&
+                <Alert bsStyle="warning" className="animated jello">
+                    <strong>Warning: </strong> {password.error}
+                </Alert>
+                }
+                <Button type='submit' bsStyle="primary" bsSize="large">{buttonText}</Button>
             </form>
         )
     }

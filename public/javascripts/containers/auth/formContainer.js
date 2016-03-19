@@ -6,25 +6,29 @@ import { authUserInfo } from '../../actions'
 
 class submitForm extends Component {
 
-    handleSubmit(data) {
+    handleSubmit(data, url) {
         console.log('Submission received!', data);
-        this.props.dispatch(authUserInfo(data));
+        this.props.dispatch(authUserInfo(url, data));
     }
 
     render() {
-        const  { authStatus } = this.props
+        const  { authStatus, buttonText, url } = this.props
         return (
-            <Form onSubmit={this.handleSubmit.bind(this)}
-                  authStatus={authStatus}/>
+            <Form onSubmit={this.handleSubmit.bind(this, url)}
+                  authStatus={authStatus}
+                  buttonText={buttonText}
+                  />
         )
     }
 
 }
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state, ownProps) => {
     return {
-        authStatus: state.authReducer
+        authStatus: state.authReducer,
+        buttonText: ownProps.buttonText,
+        url: ownProps.url
     }
 }
 
