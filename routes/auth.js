@@ -6,10 +6,10 @@ module.exports = function(app, passport) {
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
-    app.get('/', function(req, res) {
-        res.render('./auth/login'); // load the index.ejs file
+    /*app.get('/', function(req, res) {
+        res.render('./auth/signup'); // load the index.ejs file
         //res.render('auth.ejs');
-    });
+    });*/
 
     // =====================================
     // LOGIN ===============================
@@ -18,7 +18,7 @@ module.exports = function(app, passport) {
     app.get('/login', function(req, res) {
 
         // render the page and pass in any flash data if it exists
-        res.render('login.ejs', { message: req.flash('loginMessage') });
+        res.render('./auth/login');
     });
 
     // process the login form
@@ -44,15 +44,20 @@ module.exports = function(app, passport) {
     app.get('/signup', function(req, res) {
 
         // render the page and pass in any flash data if it exists
-        res.render('signup.ejs', { message: req.flash('signupMessage') });
+        res.render('./auth/signup');
     });
 
     // process the signup form
-    app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+    //app.post('/signup', passport.authenticate('local-signup', {
+    //    successRedirect : '/profile', // redirect to the secure profile section
+    //    failureRedirect : '/signup', // redirect back to the signup page if there is an error
+    //    failureFlash : true // allow flash messages
+    //}));
+    app.post('/signup', passport.authenticate('local-signup'),
+                        function(req, res){
+                            res.json({'destPage': '/profile'});
+                        }
+    );
 
     // =====================================
     // PROFILE SECTION =========================

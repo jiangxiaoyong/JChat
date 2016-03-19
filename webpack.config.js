@@ -17,12 +17,20 @@ module.exports = {
             './public/javascripts/index.js'
             //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
         ],
-        auth:[
+        login:[
             'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
             'webpack/hot/only-dev-server',
             //index: './public/javascripts/home.js',
             //auth: './public/javascripts/auth.js'
-            './public/javascripts/auth.js'
+            './public/javascripts/login.js'
+            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
+        ],
+         signup:[
+            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
+            'webpack/hot/only-dev-server',
+            //index: './public/javascripts/home.js',
+            //auth: './public/javascripts/auth.js'
+            './public/javascripts/signup.js'
             //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
         ]
 

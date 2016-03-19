@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react'
 
-const Link = ({url}) => {
+const Link = ({text, url, linkText}) => {
 
     return (
 
-        <a href={url}></a>
+        <div>
+            <p>{text} <a href={url} >{linkText}</a></p>
+        </div>
 
     )
 }

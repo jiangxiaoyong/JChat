@@ -84,9 +84,9 @@ export function loginSuccess(response) {
     }
 }
 
-export function authUserInfo(usrInfo) {
+export function authUserInfo(usrInfo, url) {
     return dispatch => {
-        return fetch('/login', {
+        return fetch(url, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -104,7 +104,7 @@ export function authUserInfo(usrInfo) {
                 }
         })
             .then( json => {
-                window.location = json.destPage
+                window.location = json.destPage //redirect page location
             })
             .catch( error => {
             console.log('POST user login authentication info failed: ' + error.message);

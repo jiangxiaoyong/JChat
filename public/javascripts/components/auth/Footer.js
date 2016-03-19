@@ -1,15 +1,16 @@
 import React from 'react'
 import Link from './Link'
 
-const Footer = () => (
+const Footer = ({ text, url, linkText }) => (
 
     <div>
-        <p>Need an account?
-            <a href='/signup'> Signup</a>
-        </p>
-        <p>Or go
-            <a href="/"> Home</a>
-        </p>
+        <Link text={text}
+              url={url}
+              linkText={linkText}/>
+
+        <Link text="Or go"
+              url="/"
+              linkText="Home"/>
     </div>
 )
 
