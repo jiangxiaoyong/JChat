@@ -13,7 +13,7 @@ const validate = values => {
 
     if(!values.password){
 
-    }else if (values.password.length > 0 && values.password.length <=3 ) {
+    }else if (values.password.length > 0 && values.password.length <=1 ) {
         errors.password = ' Password too short';
     }
 
@@ -27,30 +27,33 @@ class Form extends Component {
 
         return (
             <form onSubmit={handleSubmit} >
-                {authStatus == 'INVALID' &&
+                <div className="form-content">
+                    {authStatus == 'INVALID' && //prompt when failed to validate user name and password
+                        <Alert bsStyle="danger" className="animated jello">
+                            <strong>Error: </strong>Wrong User Name or Password
+                        </Alert>
+                    }
+
+                    <div className="form-group">
+                        <input type="text" name='email' className="form-control input-underline input-lg" placeholder="Email" {...email}/>
+                    </div>
+                    {email.touched && email.error && //prompt when wrong email address
                     <Alert bsStyle="danger" className="animated jello">
-                        <strong>Error: </strong>Wrong User Name or Password
+                        <strong>Error: </strong> {email.error}
                     </Alert>
-                }
-                <Input type="email" label="Email Address" name='email' placeholder="Enter email" {...email}/>
-                {email.touched && email.error &&
-                <Alert bsStyle="danger" className="animated jello">
-                    <strong>Error: </strong> {email.error}
-                </Alert>
-                }
-
-                {authStatus == 'INVALID' ?
-                <Input type="password" label="Password" name="password" bsStyle="error" {...password} hasFeedback/>
-                :<Input type="password" label="Password" name="password" className='animated fadeInUp' {...password} />
-                }
+                    }
 
 
-                {password.touched && password.error &&
-                <Alert bsStyle="warning" className="animated jello">
-                    <strong>Warning: </strong> {password.error}
-                </Alert>
-                }
-                <Button type='submit' bsStyle="primary" bsSize="large">{buttonText}</Button>
+                    <div className="form-group">
+                        <input type="password" name='password' className="form-control input-underline input-lg" placeholder="Password" {...password} />
+                    </div>
+                    {password.touched && password.error && //prompt when password too short
+                    <Alert bsStyle="warning" className="animated jello">
+                        <strong>Warning: </strong> {password.error}
+                    </Alert>
+                    }
+                    <button type='submit' className="btn btn-info btn-lg btn-block">{buttonText}</button>
+                </div>
             </form>
         )
     }

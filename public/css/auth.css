@@ -1,0 +1,72 @@
+body{
+    margin-top:20px;
+    color:#fff;
+}
+
+.login-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background: #3ca2e0;
+    text-align: center;
+    color: #fff;
+    padding: 3em;
+}
+
+.user-avatar {
+    width: 125px;
+    height: 125px;
+}
+
+.login-page h1 {
+    font-weight: 300;
+}
+
+.login-page .form-content {
+    padding: 40px 0;
+}
+
+.login-page .form-content .input-underline {
+    background: 0 0;
+    border: none;
+    box-shadow: none;
+    border-bottom: 2px solid rgba(255,255,255,.4);
+    color: #FFF;
+    border-radius: 0;
+}
+.login-page .form-content .input-underline:focus {
+    border-bottom: 2px solid #fff;
+}
+
+.input-lg {
+    height: 46px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 0;
+}
+
+.btn-info{
+    border-radius: 50px;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.8)inset;
+    color: rgba(255,255,255,.8);
+    background: 0 0;
+    border-color: transparent;
+    font-weight: 400;
+}
+
+input[type='text']::-webkit-input-placeholder, input[type='password']::-webkit-input-placeholder {
+    color:    #fff;
+}
+input[type='text']:-moz-placeholder, input[type='password']:-moz-placeholder {
+    color:    #fff;
+}
+input[type='text']::-moz-placeholder, input[type='password']::-moz-placeholder {
+    color:    #fff;
+}
+input[type='text']:-ms-input-placeholder, input[type='password']:-ms-input-placeholder {
+    color:    #fff;
+}
