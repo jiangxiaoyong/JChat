@@ -1,16 +1,19 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="http://91.234.35.26/iwiki-admin/v1.0.0/admin/js/jquery.nicescroll.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <meta charset="utf-8">
+    <title>JChat messenger</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet"href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+
 </head>
+
 <body>
 <div class="content container-fluid bootstrap snippets">
     <div class="row row-broken">
-        <div class="col-sm-3 col-xs-12">
+        <div class="col-sm-3 col-xs-12 animated bounceInLeft">
             <div class="col-inside-lg decor-default chat" style="overflow: hidden; outline: none;" tabindex="5000">
                 <div class="chat-users">
                     <h6>Online</h6>
@@ -225,7 +228,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 col-xs-12 chat" style="overflow: hidden; outline: none;" tabindex="5001">
+        <div class="col-sm-9 col-xs-12 chat animated bounceInRight" style="overflow: hidden; outline: none;" tabindex="5001">
             <div class="col-inside-lg decor-default">
                 <div class="chat-body">
                     <h6>Mini Chat</h6>
@@ -340,14 +343,34 @@
                         <div class="time">5 min ago</div>
                     </div>
                     <div class="answer-add">
-                        <input placeholder="Write a message">
-                        <span class="answer-btn answer-btn-1"></span>
-                        <span class="answer-btn answer-btn-2"></span>
+                        <!--Here is the box of sending message -->
+                        <div class="bottom_wrapper">
+                            <form>
+                                <div class="message_input_wrapper">
+                                    <input class="message_input" placeholder="Type your message here..." /></div>
+                                <div class="send_message">
+                                    <div class="icon"></div>
+                                    <div class="text">Send</div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>
+
+<script src="javascripts/lib/jquery-1-12.min.js"></script>
+<script src="javascripts/lib/bootstrap.min.js"></script>
+<script src="javascripts/lib/jquery.nicescroll.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+    $(".chat").niceScroll();
+    })
+</script>
+
 </body>
 </html>

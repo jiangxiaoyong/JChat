@@ -21,6 +21,12 @@ module.exports = function(app,io){
         res.render('index');
     });
 
+    app.get('/chatPage', function(req, res){
+
+        // Render views/home.html
+        res.render('./chat/chat');
+    });
+
     app.get('/create', function(req,res){
 
         // Generate unique id for the room

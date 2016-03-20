@@ -32,7 +32,7 @@ module.exports = function(app, passport) {
      app.post('/login',
             passport.authenticate('local-login'),
             function(req, res){ //this function called only when authentication successful
-                res.json({'destPage': '/profile'}); //return redirect page
+                res.json({'destPage': '/chatPage'}); //return redirect page
             }
 
         );
@@ -55,7 +55,7 @@ module.exports = function(app, passport) {
     //}));
     app.post('/signup', passport.authenticate('local-signup'),
                         function(req, res){
-                            res.json({'destPage': '/profile'});
+                            res.json({'destPage': '/chatPage'});
                         }
     );
 
