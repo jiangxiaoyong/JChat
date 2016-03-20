@@ -9,7 +9,7 @@ let LoginForm = () => (
     <div>
         <Form buttonText="Log in"
                 url="/login"/>
-        <hr/>
+        <hr className="sep-line"/>
         <Footer text="Need an account? "
                 url="/signup"
                 linkText="Signup"/>

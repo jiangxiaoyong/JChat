@@ -13,7 +13,7 @@
         <div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
             <img src="images/avatar.ico" class="user-avatar">
             <h1><span class="fa fa-sign-in"></span> Sign up</h1>
-            <div id="signupForm" class="animated bounceInDown"></div>
+            <div id="signupForm"></div>
 
         </div>
     </div>
@@ -25,6 +25,11 @@
 <script src="javascripts/lib/bootstrap.min.js"></script>
 <script src="http://192.168.99.100:3000/public/build/common.js"></script>
 <script src="http://192.168.99.100:3000/public/build/signup.bundle.js"></script>
-
+<script>
+    //animate login and signup form, fade in each element
+    $(".form-group, .btn, .sep-line, .auth-footer").hide().each(function(i) {
+        $(this).delay(i*150).fadeIn(150);
+    });
+</script>
 </body>
 </html>

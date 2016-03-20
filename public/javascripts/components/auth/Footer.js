@@ -3,7 +3,7 @@ import Link from './Link'
 
 const Footer = ({ text, url, linkText }) => (
 
-    <div>
+    <div className="auth-footer">
         <Link text={text}
               url={url}
               linkText={linkText}/>

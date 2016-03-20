@@ -6,7 +6,7 @@ let SignupForm = () => (
     <div>
         <Form buttonText="Sign up"
                 url='/signup'/>
-        <hr/>
+        <hr className="sep-line"/>
         <Footer text="Already have an account? "
                 url="/login"
                 linkText="Login"/>
