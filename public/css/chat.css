@@ -6,7 +6,10 @@ body{
     padding-bottom: 0;
 }
 .col-inside-lg {
-    padding: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 110px;
 }
 .chat {
     height: calc(100vh - 45px);
@@ -193,8 +196,8 @@ body{
 
 
 .bottom_wrapper {
-    position: relative;
-    width: 100%;
+    position: absolute;
+    width: 97%;
     background-color: #fff;
     padding: 20px 20px;
     bottom: 0;
