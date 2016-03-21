@@ -6,6 +6,8 @@ export const SELECT_REDDIT = 'SELECT_REDDIT'
 export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT'
 export const LOGGED_FAILED = 'LOGGED_FAILED'
 export const LOGGED_SUCCESSFULLY = 'LOGGED_SUCCESSFULLY'
+export const REQUEST_FRIENDLIST = 'REQUEST_FRIENDLIST'
+export const RECEIVE_FRIENDLIST = 'RECEIVE_FRIENDLIST'
 
 
 export function selectReddit(reddit) {
@@ -70,6 +72,9 @@ export function fetchPostsIfNeeded(reddit) {
  ***************************** End of Example******************************
  */
 
+/*
+ ********************************** User Authentication ************************************
+ */
 export function loginFailed(response) {
     return {
         type: LOGGED_FAILED,
@@ -111,4 +116,50 @@ export function authUserInfo(usrInfo, url) {
         });
 
     }
+}
+
+/*
+ ************************************** Friend List ************************************************
+ */
+
+export function requestFriendList() {
+    return {
+        type: REQUEST_FRIENDLIST
+    }
+}
+
+export function receiveFriendList(json) {
+    return {
+        type: RECEIVE_FRIENDLIST,
+        fList: json.data.children.map(child => child.data),
+    }
+}
+
+export function fetchFriendList() {
+    return dispatch => {
+        dispatch(requestFriendList())
+        return fetch('/friendList')
+               .then(response => response.json())
+               .then(json => dispatch(receiveFriendList(json)))
+    }
+}
+
+export function fetchFriendListIfNeeded(reddit) {
+    return (dispatch, getState) => {
+        if (shouldFetchFriendList(getState())) {
+            return dispatch(fetchFriendList())
+        }
+    }
+}
+
+function shouldFetchFriendList(state) {
+
+    const obj = state.friendListReducer
+    if (obj.isFetching){
+        return true
+    }
+    else{
+        return false
+    }
+
 }
