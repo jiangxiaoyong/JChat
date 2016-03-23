@@ -131,7 +131,7 @@ export function requestFriendList() {
 export function receiveFriendList(json) {
     return {
         type: RECEIVE_FRIENDLIST,
-        fList: json.data.children.map(child => child.data),
+        fList: json
     }
 }
 

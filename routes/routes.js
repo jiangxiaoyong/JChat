@@ -27,6 +27,31 @@ module.exports = function(app,io){
         res.render('./chat/chat');
     });
 
+    app.get('/friendList', function(req, res){
+
+        var mockList = [
+            {
+               id: 1,
+               userName: 'n1',
+               userMood: 'mood',
+               userStatus: 'online',
+               imgSrc: 'http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/images/chat/40-2.png'
+            },
+            {
+               id: 2,
+               userName: 'n2',
+               userMood: 'mood',
+               userStatus: 'online',
+               imgSrc: 'http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/images/chat/40-2.png'
+            }
+        ]
+        //return mock friend list
+        res.contentType('application/json');
+        res.send(JSON.stringify(
+           mockList
+        ))
+    })
+
     app.get('/create', function(req,res){
 
         // Generate unique id for the room

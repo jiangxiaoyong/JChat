@@ -15,13 +15,14 @@ class FriendList extends Component {
             overflow: 'hidden',
             outline: 'none'
         }
+        var lists = fList
         return (
              <div className="col-sm-3 col-xs-12 animated bounceInLeft">
                 <div className="col-inside-lg decor-default chat" style={divStyle} tabindex="5000">
                     <div className="chat-users">
                         <h6>Friends</h6>
                         {
-                            isFetching ? <h2>Loading...</h2> : {fList}.map((info, i) =>
+                            isFetching ? <h2>Loading...</h2> : lists.map((info, i) =>
                                                                 <Friend info={info}/>)
                         }
 

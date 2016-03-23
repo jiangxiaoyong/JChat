@@ -12,7 +12,7 @@ let friendListReducer = (state = {
         case RECEIVE_FRIENDLIST:
             return Object.assign({}, state, {
                 isFetching: false,
-                fList: actions.fList
+                fList: action.fList
             })
         default:
             return state
