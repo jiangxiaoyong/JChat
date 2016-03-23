@@ -11,8 +11,8 @@
 </head>
 
 <body>
-<div class="content container-fluid bootstrap snippets">
-    <div class="row row-broken">
+<div class="content container-fluid bootstrap snippets" id="root">
+    <!--<div class="row row-broken">
         <div class="col-sm-3 col-xs-12 animated bounceInLeft">
             <div class="col-inside-lg decor-default chat" style="overflow: hidden; outline: none;" tabindex="5000">
                 <div class="chat-users">
@@ -344,7 +344,6 @@
                     </div>
 
                 </div>
-                 <!--Here is the box of sending message -->
 
             </div>
              <div class="bottom_wrapper">
@@ -360,16 +359,17 @@
 
         </div>
 
-    </div>
+    </div>-->
 </div>
 
 <script src="javascripts/lib/jquery-1-12.min.js"></script>
 <script src="javascripts/lib/bootstrap.min.js"></script>
 <script src="javascripts/lib/jquery.nicescroll.min.js"></script>
+<script src="http://192.168.99.100:3000/public/build/common.js"></script>
+<script src="http://192.168.99.100:3000/public/build/chatPage.bundle.js"></script>
 <script type="text/javascript">
-
     $(function(){
-    $(".chat").niceScroll();
+        $(".chat").niceScroll();
     })
 </script>
 

@@ -1,7 +1,17 @@
 import { connect } from 'react-redux'
 import FriendList from '../../components/chat/friendList/FriendList'
+import React, { Component, PropTypes } from 'react'
 
-const mapStateToProps = (state, ownProps) => {
+class test extends Component {
+    render(){
+        const {isFetching, fList} = this.props
+        return(
+            <h1>shdfdhsfhds:{isFetching}</h1>
+        )
+    }
+}
+
+function mapStateToProps(state) {
 
     const { friendListReducer} = state
     const {
@@ -9,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
         fList
         } = friendListReducer || {
         isFetching: true,
-        items: []
+        fList: []
     }
 
     return {
@@ -25,9 +35,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
 }
 
-const FriendContainer = connect(
+const FriendListContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(FriendList)
+)(test)
 
-export default FriendContainer
+export default FriendListContainer

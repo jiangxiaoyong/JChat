@@ -18,7 +18,7 @@ module.exports = function(app,io){
     app.get('/', function(req, res){
 
         // Render views/home.html
-        res.render('index');
+        res.render('async');
     });
 
     app.get('/chatPage', function(req, res){

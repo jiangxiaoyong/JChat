@@ -155,7 +155,7 @@ export function fetchFriendListIfNeeded(reddit) {
 function shouldFetchFriendList(state) {
 
     const obj = state.friendListReducer
-    if (obj.isFetching){
+    if (!obj.fList){
         return true
     }
     else{

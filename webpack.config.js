@@ -32,6 +32,22 @@ module.exports = {
             //auth: './public/javascripts/auth.js'
             './public/javascripts/signup.js'
             //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
+        ],
+        async:[
+            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
+            'webpack/hot/only-dev-server',
+            //index: './public/javascripts/home.js',
+            //auth: './public/javascripts/auth.js'
+            './public/javascripts/index.js'
+            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
+        ],
+         chatPage:[
+            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
+            'webpack/hot/only-dev-server',
+            //index: './public/javascripts/home.js',
+            //auth: './public/javascripts/auth.js'
+            './public/javascripts/chatPage.js'
+            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
         ]
 
     },
