@@ -1,7 +1,7 @@
 import { REQUEST_FRIENDLIST, RECEIVE_FRIENDLIST} from '../../actions'
 
 let friendListReducer = (state = {
-    isFetching: false,
+    isFetching: true,
     fList: []
 }, action) => {
     switch (action.type) {

@@ -2,7 +2,7 @@ import React from 'react'
 import FriendListContainer from  '../containers/friendList/FriendListContainer'
 
 let chatApp = () => (
-    <div>
+    <div className="row row-broken">
         <FriendListContainer />
     </div>
 

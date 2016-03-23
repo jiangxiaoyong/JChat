@@ -144,7 +144,7 @@ export function fetchFriendList() {
     }
 }
 
-export function fetchFriendListIfNeeded(reddit) {
+export function fetchFriendListIfNeeded() {
     return (dispatch, getState) => {
         if (shouldFetchFriendList(getState())) {
             return dispatch(fetchFriendList())
@@ -154,8 +154,7 @@ export function fetchFriendListIfNeeded(reddit) {
 
 function shouldFetchFriendList(state) {
 
-    const obj = state.friendListReducer
-    if (!obj.fList){
+    if (state.FriendListReducer.isFetching){
         return true
     }
     else{
