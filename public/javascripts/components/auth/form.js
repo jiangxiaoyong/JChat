@@ -35,7 +35,7 @@ class Form extends Component {
                     }
 
                     <div className="form-group">
-                        <input type="text" name='email' className="form-control input-underline input-lg" placeholder="Email" {...email}/>
+                        <input type="text" name='email' className="form-control input-underline input-lg custom-input" placeholder="Email" {...email}/>
                     </div>
                     {email.touched && email.error && //prompt when wrong email address
                     <Alert bsStyle="danger" className="animated jello">

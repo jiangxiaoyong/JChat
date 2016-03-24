@@ -2,7 +2,12 @@ body{
     margin-top:20px;
     color:#fff;
 }
-
+.auth_subhead {
+    color: #a0d3e8
+}
+a {
+    color: #22b8eb
+}
 .login-page {
     position: absolute;
     top: 0;
@@ -10,10 +15,19 @@ body{
     right: 0;
     bottom: 0;
     overflow: auto;
-    background: #3ca2e0;
+    background: #22354c;
     text-align: center;
     color: #fff;
     padding: 3em;
+}
+
+.custom-input {
+    color: #fff;
+    border-bottom: 1px solid #465f77;
+}
+
+.sep-line {
+    border-top: 1px solid #465f77;
 }
 
 .user-avatar {
@@ -33,7 +47,8 @@ body{
     background: 0 0;
     border: none;
     box-shadow: none;
-    border-bottom: 2px solid rgba(255,255,255,.4);
+    /*border-bottom: 2px solid rgba(255,255,255,.4);*/
+    border-bottom: 1px solid #465f77;
     color: #FFF;
     border-radius: 0;
 }
@@ -50,11 +65,12 @@ body{
 }
 
 .btn-info{
-    border-radius: 50px;
-    box-shadow: 0 0 0 2px rgba(255,255,255,.8)inset;
+    border-radius: 10px;
+    /*box-shadow: 0 0 0 1px rgba(255,255,255,.8)inset;*/
     color: rgba(255,255,255,.8);
     background: 0 0;
-    border-color: transparent;
+    border-color: #22b8eb;
+    background-color: #22b8eb;
     font-weight: 400;
 }
 
