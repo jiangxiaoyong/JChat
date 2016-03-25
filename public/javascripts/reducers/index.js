@@ -5,7 +5,8 @@ import {
     REQUEST_POSTS, RECEIVE_POSTS
 } from '../actions'
 import authReducer from './auth/authReducer'
-import FriendListReducer from './friendList/friendListReducer'
+import friendListReducer from './friendList/friendListReducer'
+import messageReducer from './chat/messageReducer'
 
 function selectedReddit(state = 'reactjs', action) {
     switch (action.type) {
@@ -60,7 +61,8 @@ const rootReducer = combineReducers({
     postsByReddit,
     selectedReddit,
     authReducer,
-    FriendListReducer,
+    friendListReducer,
+    messageReducer,
     form: formReducer
 })
 

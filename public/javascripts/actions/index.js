@@ -8,6 +8,7 @@ export const LOGGED_FAILED = 'LOGGED_FAILED'
 export const LOGGED_SUCCESSFULLY = 'LOGGED_SUCCESSFULLY'
 export const REQUEST_FRIENDLIST = 'REQUEST_FRIENDLIST'
 export const RECEIVE_FRIENDLIST = 'RECEIVE_FRIENDLIST'
+export const RECEIVE_CHATRECORD = 'RECEIVE_CHATRECORD'
 
 
 export function selectReddit(reddit) {
@@ -154,11 +155,35 @@ export function fetchFriendListIfNeeded() {
 
 function shouldFetchFriendList(state) {
 
-    if (state.FriendListReducer.isFetching){
+    if (state.friendListReducer.isFetching){
         return true
     }
     else{
         return false
     }
 
+}
+
+/*
+ ********************************** Chat Main Body Messages *****************************************
+ */
+export function requestMessage() {
+    return {
+        type: REQUEST_MESSAGE
+    }
+}
+
+export function receiveChatRecord(json) {
+    return {
+        type: RECEIVE_CHATRECORD,
+        chatRecord: json
+    }
+}
+
+export function fetchChatRecord() {
+    return dispatch => {
+        return fetch('/chatRecord')
+               .then(response => response.json())
+               .then(json => dispatch(receiveChatRecord(json)))
+    }
 }

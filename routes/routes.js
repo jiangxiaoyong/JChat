@@ -52,6 +52,33 @@ module.exports = function(app,io){
         ))
     })
 
+     app.get('/chatRecord', function(req, res){
+
+        var mockList = [
+            {
+               type: 'answer left',
+               userName: 'n1',
+               userStatus: 'online',
+               imgSrc: 'http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/images/chat/40-2.png',
+               text: 'hahasdfasdhf',
+               time: '2016.3.24'
+            },
+            {
+               type: 'answer right',
+               userName: 'n2',
+               userStatus: 'online',
+               imgSrc: 'http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/images/chat/40-3.png',
+               text: 'reply message',
+               time: '2016.3.24'
+            }
+        ]
+        //return mock friend list
+        res.contentType('application/json');
+        res.send(JSON.stringify(
+           mockList
+        ))
+    })
+
     app.get('/create', function(req,res){
 
         // Generate unique id for the room

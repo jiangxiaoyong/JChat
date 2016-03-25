@@ -1,27 +1,27 @@
 import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
-import Message from '../../components/chat/chatBody/Message'
+import MessageList from '../../components/chat/chatBody/MessageList'
 
 const mapStateToProps = (state) => {
 
     const { messageReducer } = state
     const {
-        messageType,
-        payload
+        mType,
+        chatRecord
         } = messageReducer || {
-        messageType: 'answer left',
-        payload: []
+        mType: 'answer left',
+        chatRecord: []
     }
 
     return {
-        messageType,
-        payload
+        mType,
+        chatRecord
     }
 }
 
 
 const MessageContainer = connect(
     mapStateToProps
-)(Message)
+)(MessageList)
 
 export default MessageContainer

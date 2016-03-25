@@ -4,11 +4,11 @@ import React, { Component, PropTypes } from 'react'
 
 function mapStateToProps(state) {
 
-    const { FriendListReducer} = state
+    const { friendListReducer} = state
     const {
         isFetching,
         fList
-        } = FriendListReducer || {
+        } = friendListReducer || {
         isFetching: true,
         fList: []
     }
