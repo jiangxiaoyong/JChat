@@ -139,7 +139,9 @@ export function receiveFriendList(json) {
 export function fetchFriendList() {
     return dispatch => {
         dispatch(requestFriendList())
-        return fetch('/friendList')
+        return fetch('/friendList', {
+            credentials: 'include' //for request with credential with cookie, so backend can use session id to distinguish diff user
+        })
                .then(response => response.json())
                .then(json => dispatch(receiveFriendList(json)))
     }
@@ -182,7 +184,9 @@ export function receiveChatRecord(json) {
 
 export function fetchChatRecord() {
     return dispatch => {
-        return fetch('/chatRecord')
+        return fetch('/chatRecord', {
+            credentials: 'include' //for request with credential with cookie, so backend can use session id to distinguish diff user
+        })
                .then(response => response.json())
                .then(json => dispatch(receiveChatRecord(json)))
     }

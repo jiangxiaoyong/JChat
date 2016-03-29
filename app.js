@@ -9,6 +9,10 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
+var redis = require("redis");
+var RedisStore = require('connect-redis')(session);
+//var client = redis.createClient('6379', '172.17.0.2'); //connect to redis that running in docker at that special ip, may be change when deploy tha app to PaaS
+
 
 //MongoDB configuration
 var configDB = require('./config/database.js');
@@ -23,8 +27,15 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// required for passport
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+// user redis as session store. This way put session store out of our server, and can be retrieve fast.
+// express use MemoryStore by default.
+app.use(session({
+    store: new RedisStore({
+        host: process.env.REDIS_HOST || '192.168.99.100', // can also use redis internal ip address, like 172.17.*.*
+        port: process.env.REDIS_PORT || 6379,
+    }),
+    secret: 'secretKey' //session secret
+}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

@@ -21,13 +21,13 @@ module.exports = function(app,io){
         res.render('index');
     });
 
-    app.get('/chatPage', function(req, res){
+    app.get('/chatPage', isLoggedIn, function(req, res){
 
         // Render views/home.html
         res.render('./chat/chat');
     });
 
-    app.get('/friendList', function(req, res){
+    app.get('/friendList', isLoggedIn, function(req, res){
 
         var mockList = [
             {
@@ -52,7 +52,7 @@ module.exports = function(app,io){
         ))
     })
 
-     app.get('/chatRecord', function(req, res){
+     app.get('/chatRecord', isLoggedIn, function(req, res){
 
         var mockList = [
             {
@@ -216,5 +216,16 @@ function findClientsSocket(io,roomId, namespace) {
         }
     }
     return res;
+}
+
+// route middleware to make sure
+function isLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
 }
 
