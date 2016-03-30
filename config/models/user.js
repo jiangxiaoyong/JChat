@@ -7,7 +7,7 @@ var bcrypt   = require('bcrypt-nodejs');
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
-    local            : {
+    info            : {
         email        : String,
         password     : String,
         userName     : String
@@ -41,7 +41,7 @@ userSchema.methods.generateHash = function(password) {
 
 // checking if password is valid
 userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.info.password);
 };
 
 // create the model for users and expose it to our app
