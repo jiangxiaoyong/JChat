@@ -2,7 +2,7 @@
  * Created by jxymacbook on 2016-03-11.
  */
 import React from 'react'
-import Form from '../../containers/auth/FormContainer'
+import Form from '../../containers/auth/LFormContainer'
 import Footer from './Footer'
 
 let LoginForm = () => (

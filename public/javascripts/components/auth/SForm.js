@@ -5,6 +5,10 @@ import { Alert, Input, Button } from 'react-bootstrap';
 const validate = values => {
     const errors = {};
 
+    if (!values.userName) {
+        errors.userName = 'Required';
+    }
+
     if (!values.email) {
         errors.email = 'Required';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -20,18 +24,26 @@ const validate = values => {
     return errors;
 };
 
-class Form extends Component {
+class SForm extends Component {
 
     render() {
-        const {fields: {email, password}, handleSubmit, authStatus, buttonText} = this.props;
+        const {fields: {email, password, userName}, handleSubmit, authStatus, buttonText} = this.props;
 
         return (
             <form onSubmit={handleSubmit} >
                 <div className="form-content">
                     {authStatus == 'INVALID' && //prompt when failed to validate user name and password
                         <Alert bsStyle="danger" className="animated jello">
-                            <strong>Error: </strong>Wrong User Name or Password
+                            <strong>Error: </strong>User name exist
                         </Alert>
+                    }
+                    <div className="form-group">
+                        <input type="text" name='userName' className="form-control input-underline input-lg custom-input" placeholder="User Name" {...userName}/>
+                    </div>
+                    {userName.touched && userName.error && //prompt when no input of user name
+                    <Alert bsStyle="danger" className="animated jello">
+                        <strong>Error: </strong> {userName.error}
+                    </Alert>
                     }
 
                     <div className="form-group">
@@ -60,10 +72,10 @@ class Form extends Component {
 
 }
 
-Form = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
+SForm = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
     form: 'login',                           // a unique name for this form
-    fields: ['email', 'password'], // all the fields in your form
+    fields: ['email', 'password', 'userName'], // all the fields in your form
     validate,
-})(Form);
+})(SForm);
 
-export default Form
+export default SForm

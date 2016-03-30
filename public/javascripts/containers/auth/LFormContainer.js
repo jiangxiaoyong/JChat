@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { initialize } from 'redux-form';
-import Form from '../../components/auth/Form';
+import LForm from '../../components/auth/LForm';
 import { authUserInfo } from '../../actions'
 
 class submitForm extends Component {
@@ -14,7 +14,7 @@ class submitForm extends Component {
     render() {
         const  { authStatus, buttonText, url } = this.props
         return (
-            <Form onSubmit={this.handleSubmit.bind(this, url)}
+            <LForm onSubmit={this.handleSubmit.bind(this, url)}
                   authStatus={authStatus}
                   buttonText={buttonText}
                   />

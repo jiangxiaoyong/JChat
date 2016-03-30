@@ -1,5 +1,5 @@
 import React from 'react'
-import Form from '../../containers/auth/FormContainer'
+import Form from '../../containers/auth/SFormContainer'
 import Footer from './Footer'
 
 let SignupForm = () => (
