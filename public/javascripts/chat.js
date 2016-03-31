@@ -1,16 +1,14 @@
-/**
- * Created by jxy on 02/01/16.
- */
-
-// This file is executed in the browser, when people visit /chat/<random id>
 "use strict";
 
 $(function(){
-    // getting the id of the room from the url
-    var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
 
     // connect to the socket
     var socket = io();
+    var data = {a:'a',b:'b'};
+    socket.emit('msg', JSON.stringify(data));
+
+     // getting the id of the room from the url
+    var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
 
     // variables which hold the data for each person
     var name = "",

@@ -13,7 +13,7 @@ var gravatar = require('gravatar');
 // Export a function, so that we can pass
 // the app and io instances from the App.js file:
 
-module.exports = function(app,io){
+module.exports = function(app, io, pub, sub){
 
     app.get('/', function(req, res){
 
@@ -94,8 +94,11 @@ module.exports = function(app,io){
         res.render('chat');
     });
 
+
+
     // Initialize a new socket.io application, named 'chat'
     var chat = io.on('connection', function (socket) {
+
 
         // When the client emits the 'load' event, reply with the
         // number of people in this chat room
@@ -193,9 +196,19 @@ module.exports = function(app,io){
         socket.on('msg', function(data){
 
             // When the server receives a message, it sends it to the other person in the room.
-            socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
+            //socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
+            pub.publish('chatting', data);
         });
+
+        sub.subscribe('chatting');
+        sub.on('message', function(channel, message) {
+            console.log('message in socketIO ' + message);
+        })
+
     });
+
+
+
 };
 
 function findClientsSocket(io,roomId, namespace) {

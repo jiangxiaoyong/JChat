@@ -11,8 +11,8 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var redis = require("redis");
 var RedisStore = require('connect-redis')(session);
-//var client = redis.createClient('6379', '172.17.0.2'); //connect to redis that running in docker at that special ip, may be change when deploy tha app to PaaS
-
+var pub = redis.createClient('6379', '172.17.0.2'); //connect to redis that running in docker at that special ip, may be change when deploy tha app to PaaS
+var sub = redis.createClient('6379', '172.17.0.2');
 
 //MongoDB configuration
 var configDB = require('./config/database.js');
@@ -44,14 +44,24 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 var port = process.env.PORT || 8080;
 app.set('port', port);
 
+//check redis publisher connection status
+pub.on('error', function(err) {
+    console.log('Error connecting to redis publisher', err);
+})
+
+//check redis subscriber connection status
+sub.on('error', function(err) {
+    console.log('Error connecting to redis subscriber', err);
+})
+
 server.listen(port);
-console.log('Your application is running on http://localhost:' + port);
+console.log('Your application is running on port:' + port);
 
 // Require the configuration and the routes files, and pass
 // the app and io as arguments to the returned functions.
 require('./config')(app, io);
 require('./routes/auth')(app, passport);
-require('./routes/routes')(app, io);
+require('./routes/routes')(app, io, pub, sub);
 
 //error handle
 
