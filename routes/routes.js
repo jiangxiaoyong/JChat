@@ -10,6 +10,9 @@
 
 var gravatar = require('gravatar');
 
+// load up the user model
+var User       		= require('../config/models/user');
+
 // Export a function, so that we can pass
 // the app and io instances from the App.js file:
 
@@ -33,27 +36,24 @@ module.exports = function(app, io, pub, sub){
 
     app.get('/friendList', isLoggedIn, function(req, res){
 
-        var mockList = [
-            {
-               id: 1,
-               userName: 'n1',
-               userMood: 'mood',
-               userStatus: 'online',
-               imgSrc: '/images/Mario.ico'
-            },
-            {
-               id: 2,
-               userName: 'n2',
-               userMood: 'mood',
-               userStatus: 'online',
-               imgSrc: '/images/unnamed.jpg'
-            }
-        ]
-        //return mock friend list
-        res.contentType('application/json');
-        res.send(JSON.stringify(
-           mockList
-        ))
+        var list = [];
+        User.findById(req.query.userId, function(err, user) {
+            user.friendList.forEach(function(item){
+                list.push({
+                    id: item.id,
+                    chID: item.chID,
+                    userName: item.userName,
+                    userStatus: item.userStatue,
+                    imgSrc: item.imgSrc
+                })
+            })
+        }).then(function(){
+            res.contentType('application/json');
+            res.send(JSON.stringify(
+                list
+            ))
+        });
+
     })
 
      app.get('/chatRecord', isLoggedIn, function(req, res){
