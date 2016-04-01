@@ -1,16 +1,24 @@
 import React, { Component, PropTypes } from 'react'
 import Friend from './Friend'
-import { fetchFriendListIfNeeded } from '../../../actions'
+import { fetchFriendListIfNeeded, fetchUserInfo } from '../../../actions'
 
 class FriendList extends Component {
 
-    componentDidMount() {
+    componentWillMount() {
         const { dispatch } = this.props
-        dispatch(fetchFriendListIfNeeded())
+        dispatch(fetchUserInfo())
+    }
+
+    componentWillReceiveProps(nextProps) {
+        //fetch friend list only when user info available
+        if (nextProps.userInfoAvailability !== this.props.userInfoAvailability) {
+            const { dispatch, userId } = nextProps
+            dispatch(fetchFriendListIfNeeded(userId))
+        }
     }
 
     render() {
-        const {isFetching, fList} =  this.props
+        const {isFetching, fList, userInfoAvailability } =  this.props
         var divStyle = {
             overflow: 'hidden',
             outline: 'none'

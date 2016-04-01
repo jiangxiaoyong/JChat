@@ -8,6 +8,8 @@ export const LOGGED_FAILED = 'LOGGED_FAILED'
 export const LOGGED_SUCCESSFULLY = 'LOGGED_SUCCESSFULLY'
 export const REQUEST_FRIENDLIST = 'REQUEST_FRIENDLIST'
 export const RECEIVE_FRIENDLIST = 'RECEIVE_FRIENDLIST'
+export const REQUEST_USERINFO = 'REQUEST_USERINFO'
+export const RECEIVE_USERINFO = 'RECEIVE_USERINFO'
 export const RECEIVE_CHATRECORD = 'RECEIVE_CHATRECORD'
 
 
@@ -83,10 +85,10 @@ export function loginFailed(response) {
     }
 }
 
-export function loginSuccess(response) {
+export function loginSuccess(userInfo) {
     return {
         type: LOGGED_SUCCESSFULLY,
-        response
+
     }
 }
 
@@ -103,10 +105,8 @@ export function authUserInfo(usrInfo, url) {
         })
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
-                    dispatch(loginSuccess(response));
                     return response.json();
                 } else {
-                    dispatch(loginFailed(response));
                 }
         })
             .then( json => {
@@ -116,6 +116,25 @@ export function authUserInfo(usrInfo, url) {
             console.log('POST user login authentication info failed: ' + error.message);
         });
 
+    }
+}
+/*
+ ************************************** User Info ************************************************
+ */
+export function fetchUserInfo() {
+    return dispatch => {
+        return fetch('/userInfo', {
+            credentials: 'include' //for request with credential with cookie, so backend can use session id to distinguish diff user
+        })
+               .then(response => response.json())
+               .then(json => dispatch(receiveUserInfo(json.userInfo)))
+    }
+}
+
+export function receiveUserInfo(userInfo) {
+    return {
+        type: RECEIVE_USERINFO,
+        userInfo: userInfo
     }
 }
 
@@ -136,10 +155,10 @@ export function receiveFriendList(json) {
     }
 }
 
-export function fetchFriendList() {
+export function fetchFriendList(userId) {
     return dispatch => {
         dispatch(requestFriendList())
-        return fetch('/friendList', {
+        return fetch('/friendList' + '?userId=' + userId, {
             credentials: 'include' //for request with credential with cookie, so backend can use session id to distinguish diff user
         })
                .then(response => response.json())
@@ -147,10 +166,10 @@ export function fetchFriendList() {
     }
 }
 
-export function fetchFriendListIfNeeded() {
+export function fetchFriendListIfNeeded(userId) {
     return (dispatch, getState) => {
         if (shouldFetchFriendList(getState())) {
-            return dispatch(fetchFriendList())
+            return dispatch(fetchFriendList(userId))
         }
     }
 }

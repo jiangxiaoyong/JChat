@@ -8,5 +8,5 @@ how to run docker nodejs and link to redis
 MongoDB command
 ================================================
 **add new fields if the specified field does not exiest**
-- db.users.update( {"_id": ObjectId("56fb580c621cb6ed0011d79e")}, { $set : {"friendList" : {"id": 123, "chID": 123}}})
+- db.users.update( {"_id": ObjectId("56fd8b59226076750236d579")}, { $set : {"frienList" :[ {"id": '', "chID": '', 'userName':'mike', 'userStatus':'online', 'imgSrc':'/images/avatar.ico'}]}})
 

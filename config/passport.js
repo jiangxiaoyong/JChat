@@ -62,6 +62,7 @@ module.exports = function(passport) {
                     newUser.info.email    = email;
                     newUser.info.password = newUser.generateHash(password); // use the generateHash function in our user model
                     newUser.info.userName = req.body.userName;
+                    newUser.info.imgSrc   = '/images/Mario.ico'
 
                     // save the user
                     newUser.save(function(err) {

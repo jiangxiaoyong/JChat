@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react'
 
 function mapStateToProps(state) {
 
-    const { friendListReducer} = state
+    const { friendListReducer, userInfoReducer} = state
     const {
         isFetching,
         fList
@@ -13,8 +13,13 @@ function mapStateToProps(state) {
         fList: []
     }
 
+    let userInfoAvailability =  userInfoReducer.availability //used as flag to determine when to fetch friend list
+    let userId = userInfoReducer.id
+
     return {
         isFetching,
+        userInfoAvailability,
+        userId,
         fList
     }
 }

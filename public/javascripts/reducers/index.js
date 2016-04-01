@@ -7,6 +7,7 @@ import {
 import authReducer from './auth/authReducer'
 import friendListReducer from './friendList/friendListReducer'
 import messageReducer from './chat/messageReducer'
+import userInfoReducer from './user/userInfoReducer'
 
 function selectedReddit(state = 'reactjs', action) {
     switch (action.type) {
@@ -62,6 +63,7 @@ const rootReducer = combineReducers({
     selectedReddit,
     authReducer,
     friendListReducer,
+    userInfoReducer,
     messageReducer,
     form: formReducer
 })

@@ -27,6 +27,10 @@ module.exports = function(app, io, pub, sub){
         res.render('./chat/chat');
     });
 
+    app.get('/userInfo', isLoggedIn, function(req, res){
+        res.json({ 'userInfo': req.user});
+    })
+
     app.get('/friendList', isLoggedIn, function(req, res){
 
         var mockList = [
@@ -35,14 +39,14 @@ module.exports = function(app, io, pub, sub){
                userName: 'n1',
                userMood: 'mood',
                userStatus: 'online',
-               imgSrc: 'http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/images/chat/40-2.png'
+               imgSrc: '/images/Mario.ico'
             },
             {
                id: 2,
                userName: 'n2',
                userMood: 'mood',
                userStatus: 'online',
-               imgSrc: 'http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/images/chat/40-2.png'
+               imgSrc: '/images/unnamed.jpg'
             }
         ]
         //return mock friend list
@@ -59,7 +63,7 @@ module.exports = function(app, io, pub, sub){
                type: 'answer left',
                userName: 'n1',
                userStatus: 'online',
-               imgSrc: 'http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/images/chat/40-2.png',
+               imgSrc: '/images/unnamed.jpg',
                text: 'hahasdfasdhf',
                time: '2016.3.24'
             },
@@ -67,7 +71,7 @@ module.exports = function(app, io, pub, sub){
                type: 'answer right',
                userName: 'n2',
                userStatus: 'online',
-               imgSrc: 'http://91.234.35.26/iwiki-admin/v1.0.0/admin/img/images/chat/40-3.png',
+               imgSrc: '/images/unnamed.jpg',
                text: 'reply message',
                time: '2016.3.24'
             }
