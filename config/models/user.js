@@ -13,6 +13,15 @@ var userSchema = mongoose.Schema({
         userName     : String,
         imgSrc       : String
     },
+    friendList       : [
+        {
+            id       : String,
+            chID     : String,
+            userName : String,
+            userStatus     : String,
+            imgSrc   : String
+        }
+    ],
     facebook         : {
         id           : String,
         token        : String,
