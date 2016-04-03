@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import InputBoxContainer from '../../../containers/chat/InputBoxContainer'
 import MessageContainer from '../../../containers/chat/MessageContainer'
-import {sendMessage, receiveMessage} from '../../../actions'
+import {sendMessage, receiveMessage, resetInputBox } from '../../../actions'
 import io from 'socket.io-client';
+import {reset} from 'redux-form';
+
+
 
 let socket;
 let activeFriend;
@@ -12,7 +15,7 @@ class MainBody extends Component {
 
     handleIncomingMsg() {
         const {dispatch} = this.props
-        socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by currentl user ID
+        socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by current user ID
             dispatch(receiveMessage(msg, activeFriend))
         })
     }
@@ -25,7 +28,7 @@ class MainBody extends Component {
         if(nextProps.currentUser.availability != this.props.currentUser.availability ) { //current user info is available
             currentUser = nextProps.currentUser // store current user info
             this.handleIncomingMsg() //establish socket listener only when user info is available
-            socket.emit('iam', currentUser.id);
+            socket.emit('iam', currentUser.id); //report who i am for debugging
         }
 
         if(nextProps.friendListReducer.availability != this.props.friendListReducer.availability) {
@@ -38,11 +41,13 @@ class MainBody extends Component {
                         from: currentUser.id,
                         to  : activeFriend.id,
                         text: data.message,
-                        time: new Date().toLocaleString()
+                        time:    new Date().toLocaleTimeString('en-US', { hour12: false,
+                                                                          hour: "numeric",
+                                                                          minute: "numeric"})
                   }
-        socket.emit('sendMsg', msg)
-        this.dispatch(sendMessage(msg, currentUser))
-
+        socket.emit('sendMsg', msg) // send message to back-end nodeJS server over socket io
+        this.dispatch(reset('message')) //clear message input box
+        this.dispatch(sendMessage(msg, currentUser)) //display sending message on chat record box
 
     }
 

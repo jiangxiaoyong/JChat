@@ -40,7 +40,7 @@ let messageReducer = (state = [], action) => {
         case RECEIVE_CHATRECORD:
             return Object.assign({}, state, {
                 chatRecord: action.chatRecord
-            })       
+            })
         default:
             return state
     }

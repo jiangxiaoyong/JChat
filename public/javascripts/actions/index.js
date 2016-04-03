@@ -14,7 +14,6 @@ export const RECEIVE_CHATRECORD = 'RECEIVE_CHATRECORD'
 export const SEND_MESSAGE = 'SEND_MESSAGE'
 export const RECEIVE_MESSAGE = "RECEIVE_MESSAGE"
 
-
 export function selectReddit(reddit) {
     return {
         type: SELECT_REDDIT,
@@ -208,7 +207,7 @@ export function receiveMessage(msg, activeFriend) {
 
 export function requestMessage() {
     return {
-        type: REQUEST_MESSAGE
+        type: REQUST_MESSAGE
     }
 }
 
