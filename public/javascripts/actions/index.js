@@ -11,6 +11,8 @@ export const RECEIVE_FRIENDLIST = 'RECEIVE_FRIENDLIST'
 export const REQUEST_USERINFO = 'REQUEST_USERINFO'
 export const RECEIVE_USERINFO = 'RECEIVE_USERINFO'
 export const RECEIVE_CHATRECORD = 'RECEIVE_CHATRECORD'
+export const SEND_MESSAGE = 'SEND_MESSAGE'
+export const RECEIVE_MESSAGE = "RECEIVE_MESSAGE"
 
 
 export function selectReddit(reddit) {
@@ -188,6 +190,21 @@ function shouldFetchFriendList(state) {
 /*
  ********************************** Chat Main Body Messages *****************************************
  */
+export function sendMessage(msg, currentUser) {
+    return {
+        type: SEND_MESSAGE,
+        msg,
+        currentUser
+    }
+}
+
+export function receiveMessage(msg) {
+    return {
+        type: RECEIVE_MESSAGE,
+        msg
+    }
+}
+
 export function requestMessage() {
     return {
         type: REQUEST_MESSAGE
@@ -201,9 +218,9 @@ export function receiveChatRecord(json) {
     }
 }
 
-export function fetchChatRecord() {
+export function fetchChatRecord(userId) {
     return dispatch => {
-        return fetch('/chatRecord', {
+        return fetch('/chatRecord' + '?userId=' + userId, {
             credentials: 'include' //for request with credential with cookie, so backend can use session id to distinguish diff user
         })
                .then(response => response.json())

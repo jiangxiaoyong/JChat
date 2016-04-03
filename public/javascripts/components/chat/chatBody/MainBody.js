@@ -1,41 +1,45 @@
 import React, { Component, PropTypes } from 'react'
 import InputBoxContainer from '../../../containers/chat/InputBoxContainer'
 import MessageContainer from '../../../containers/chat/MessageContainer'
+import {sendMessage, receiveMessage} from '../../../actions'
 import io from 'socket.io-client';
 
-const socket = io()
+let socket;
 let activeFriend;
 let currentUser;
 
 class MainBody extends Component {
 
     handleIncomingMsg() {
-        socket.on('receiveMsg' + currentUser.id, function(data){
+        //const {dispatch} = this.props
+        socket.on('receiveMsg@' + currentUser.id, function(data){ //only accept message that send to me specified by currentl user ID
             console.log('receive data: '+ data)
         })
     }
 
     componentDidMount() {
-
+        socket = io() //connect to nodeJS server
     }
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.currentUser.availability != this.props.currentUser.availability ) { //current user info is available
             currentUser = nextProps.currentUser // store current user info
-            this.handleIncomingMsg()
+            this.handleIncomingMsg() //establish socket listener only when user info is available
             socket.emit('iam', currentUser.id);
         }
 
         activeFriend = nextProps.activeFriend // store current active chatting friend
     }
     handleSendMsg(data) {
-        var chID =  activeFriend.chID
-        socket.emit('sendMsg', {
-                                from: currentUser.id,
-                                to  : activeFriend.id,
-                                chID: chID,
-                                text: data.message
-                            })
+        //const { dispatch } = this.props
+        var msg = {
+                        from: currentUser.id,
+                        to  : activeFriend.id,
+                        text: data.message,
+                        time: new Date().toLocaleString()
+                  }
+        socket.emit('sendMsg', msg)
+        this.dispatch(sendMessage(msg, currentUser))
 
 
     }

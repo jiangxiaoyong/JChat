@@ -3,14 +3,20 @@ import Message from './Message'
 import { fetchChatRecord } from '../../../actions'
 
 class MessageList extends Component {
-    
+
+    componentWillReceiveProps(nextProps) {
+        //fetch chat record only when user info available
+        if (nextProps.userInfoAvailability !== this.props.userInfoAvailability) {
+            const { dispatch, userId } = nextProps
+            //dispatch(fetchChatRecord(userId))
+        }
+    }
     componentDidMount() {
-        const { dispatch } = this.props
-        dispatch(fetchChatRecord())
+
     }
     
     render() {
-        const { chatRecord, mType } =  this.props
+        const { chatRecord } =  this.props
 
         var chatList = chatRecord
         return(
