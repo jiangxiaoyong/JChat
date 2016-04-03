@@ -4,7 +4,7 @@ import MainBody from '../../components/chat/chatBody/MainBody'
 
 let mapStateToProps = (state) => {
     return {
-        activeFriend: state.friendListReducer.activeFriend,
+        friendListReducer: state.friendListReducer,
         currentUser: state.userInfoReducer
     }
 }

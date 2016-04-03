@@ -28,10 +28,12 @@ class MainBody extends Component {
             socket.emit('iam', currentUser.id);
         }
 
-        activeFriend = nextProps.activeFriend // store current active chatting friend
+        if(nextProps.friendListReducer.availability != this.props.friendListReducer.availability) {
+             activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting friend
+        }
+
     }
     handleSendMsg(data) {
-        //const { dispatch } = this.props
         var msg = {
                         from: currentUser.id,
                         to  : activeFriend.id,

@@ -2,14 +2,9 @@ import { REQUEST_FRIENDLIST, RECEIVE_FRIENDLIST} from '../../actions'
 
 let friendListReducer = (state = {
     isFetching: true,
+    availability: false,
     fList: [],
-    activeFriend: {
-        id : "56fd8b99226076750236d57a",
-        chID : "56fd8b59226076750236d579&56fd8b99226076750236d57a",
-        userName : "mike",
-        userStatus : "online",
-        imgSrc : "/images/avatar.ico"
-    }
+    activeFriend: {}
 }, action) => {
     switch (action.type) {
         case REQUEST_FRIENDLIST:
@@ -19,7 +14,8 @@ let friendListReducer = (state = {
         case RECEIVE_FRIENDLIST:
             return Object.assign({}, state, {
                 isFetching: false,
-                fList: action.fList
+                fList: action.fList,
+                availability: true
             })
         default:
             return state

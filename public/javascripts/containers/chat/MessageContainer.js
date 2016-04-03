@@ -4,7 +4,7 @@ import MessageList from '../../components/chat/chatBody/MessageList'
 
 const mapStateToProps = (state) => {
 
-    const { messageReducer,  userInfoReducer } = state
+    const { messageReducer } = state
     let chatRecord= messageReducer || []
 
 
