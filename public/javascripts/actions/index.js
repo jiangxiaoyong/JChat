@@ -198,10 +198,11 @@ export function sendMessage(msg, currentUser) {
     }
 }
 
-export function receiveMessage(msg) {
+export function receiveMessage(msg, activeFriend) {
     return {
         type: RECEIVE_MESSAGE,
-        msg
+        msg,
+        activeFriend
     }
 }
 

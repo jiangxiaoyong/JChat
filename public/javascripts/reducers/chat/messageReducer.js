@@ -13,7 +13,12 @@ let convertMsg = (state, action) => {
             }
         case RECEIVE_MESSAGE:
             return {
-
+                type: 'answer left',
+                userName: action.activeFriend.userName,
+                userStatus: 'online',
+                imgSrc: action.activeFriend.imgSrc,
+                text: action.msg.text,
+                time: action.msg.time
             }
         default:
             return state

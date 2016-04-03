@@ -11,9 +11,9 @@ let currentUser;
 class MainBody extends Component {
 
     handleIncomingMsg() {
-        //const {dispatch} = this.props
-        socket.on('receiveMsg@' + currentUser.id, function(data){ //only accept message that send to me specified by currentl user ID
-            console.log('receive data: '+ data)
+        const {dispatch} = this.props
+        socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by currentl user ID
+            dispatch(receiveMessage(msg, activeFriend))
         })
     }
 
