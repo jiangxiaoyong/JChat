@@ -12,6 +12,7 @@ var gravatar = require('gravatar');
 
 // load up the user model
 var User       		= require('../config/models/user');
+var sender;
 
 // Export a function, so that we can pass
 // the app and io instances from the App.js file:
@@ -48,11 +49,17 @@ module.exports = function(app, io, pub, sub){
                 })
             })
         }).then(function(){
+
+             //establish chatting channels with all friend when user fetch their own friend list
+            //buildChatChannels(sub, list);
+
             res.contentType('application/json');
             res.send(JSON.stringify(
                 list
             ))
         });
+
+
 
     })
 
@@ -196,21 +203,30 @@ module.exports = function(app, io, pub, sub){
         });
 
 
-        // Handle the sending of messages
-        socket.on('msg', function(data){
 
+        /*
+            Establish connection with clients
+         */
+
+        // Handle the receiving of messages
+        socket.on('sendMsg', function(payload){
+            sender = payload.from;
             // When the server receives a message, it sends it to the other person in the room.
             //socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
-            pub.publish('chatting', data);
+            pub.publish(payload.to, JSON.stringify(payload));
         });
 
-        sub.subscribe('chatting');
-        sub.on('message', function(channel, message) {
-            console.log('message in socketIO ' + message);
+        socket.on('iam', function(id) {
+            sub.subscribe(id) //only subscribe current user ID, friend who want to talk to me, just publishing on my ID
         })
 
-    });
 
+
+    });
+         sub.on('message', function(channel, payload) {
+            var msg = JSON.parse(payload)
+               chat.emit('receiveMsg' + msg.to, msg);
+        })
 
 
 };
@@ -244,5 +260,11 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
     res.redirect('/');
+}
+
+function buildChatChannels(sub, friendList) {
+    friendList.forEach(function(item) {
+         sub.subscribe(item.chID);
+    })
 }
 

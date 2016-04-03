@@ -4,16 +4,40 @@ import MessageContainer from '../../../containers/chat/MessageContainer'
 import io from 'socket.io-client';
 
 const socket = io()
+let activeFriend;
+let currentUser;
 
 class MainBody extends Component {
 
+    handleIncomingMsg() {
+        socket.on('receiveMsg' + currentUser.id, function(data){
+            console.log('receive data: '+ data)
+        })
+    }
+
     componentDidMount() {
-        const { dispatch, socket } = this.props
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.currentUser.availability != this.props.currentUser.availability ) { //current user info is available
+            currentUser = nextProps.currentUser // store current user info
+            this.handleIncomingMsg()
+            socket.emit('iam', currentUser.id);
+        }
+
+        activeFriend = nextProps.activeFriend // store current active chatting friend
+    }
     handleSendMsg(data) {
-        socket.emit('hello', {'a':'a'})
+        var chID =  activeFriend.chID
+        socket.emit('sendMsg', {
+                                from: currentUser.id,
+                                to  : activeFriend.id,
+                                chID: chID,
+                                text: data.message
+                            })
+
+
     }
 
     render() {

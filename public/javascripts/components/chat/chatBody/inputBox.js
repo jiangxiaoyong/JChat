@@ -1,16 +1,29 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
+import {reduxForm} from 'redux-form';
 
-const InputBox = ({ }) => (
+class InputBox extends Component {
 
-       <form>
-           <div className='message_input_wrapper'>
-               <input className="message_input" placeholder="Type your message here..."/>
-           </div>
-           <div className="send_message">
-               <div className="icon"></div>
-               <div className="text">Send</div>
-           </div>
-       </form>
-)
+
+    render(){
+        const {fields: {message}, handleSubmit } = this.props;
+        return(
+              <form onSubmit={handleSubmit}>
+                <div className='message_input_wrapper'>
+                    <input type="text" name='email' className="message_input" placeholder="Type your message here..." {...message}/>
+                </div>
+
+                <button type='submit' className="send_message">
+                    <div className="text">Send</div>
+                </button>
+            </form>
+         )
+
+    }
+
+}
+InputBox = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
+    form: 'message',
+    fields: ['message' ] // all the fields in your form
+})(InputBox);
 
 export default InputBox

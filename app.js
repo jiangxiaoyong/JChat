@@ -11,8 +11,10 @@ var bodyParser   = require('body-parser');
 var session      = require('express-session');
 var redis = require("redis");
 var RedisStore = require('connect-redis')(session);
-var pub = redis.createClient('6379', '172.17.0.2'); //connect to redis that running in docker at that special ip, may be change when deploy tha app to PaaS
-var sub = redis.createClient('6379', '172.17.0.2');
+var REDIS_ADDR = process.env.REDIS_PORT_6379_TCP_ADDR;
+var REDIS_PORT = process.env.REDIS_PORT_6379_TCP_PORT;
+var pub = redis.createClient(REDIS_PORT, REDIS_ADDR); //connect to redis that running in docker at that special ip, may be change when deploy tha app to PaaS
+var sub = redis.createClient(REDIS_PORT, REDIS_ADDR);
 
 //MongoDB configuration
 var configDB = require('./config/database.js');
@@ -31,8 +33,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // express use MemoryStore by default.
 app.use(session({
     store: new RedisStore({
-        host: process.env.REDIS_HOST || '192.168.99.100', // can also use redis internal ip address, like 172.17.*.*
-        port: process.env.REDIS_PORT || 6379,
+        host: REDIS_ADDR|| '192.168.99.100', // can also use redis internal ip address, like 172.17.*.*
+        port: REDIS_PORT|| 6379,
     }),
     secret: 'secretKey' //session secret
 }));
