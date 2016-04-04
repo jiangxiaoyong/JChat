@@ -17,6 +17,7 @@
     "express-session": "latest",
     "gravatar": "latest",
     "isomorphic-fetch": "^2.2.1",
+    "jquery": "^2.2.2",
     "method-override": "latest",
     "mongoose": "latest",
     "morgan": "latest",

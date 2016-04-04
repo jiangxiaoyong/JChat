@@ -25,7 +25,7 @@ class FriendList extends Component {
         }
         var lists = fList
         return (
-             <div className="col-sm-3 col-xs-12 animated bounceInLeft">
+             <div className="col-sm-3 col-xs-12 animated fadeInLeft">
                 <div className="col-inside-lg decor-default chat" style={divStyle} tabindex="5000">
                     <div className="chat-users">
                         <h6>Friends</h6>

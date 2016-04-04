@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Message from './Message'
 import { fetchChatRecord } from '../../../actions'
+import $ from 'jquery'
 
 class MessageList extends Component {
 
@@ -13,6 +14,10 @@ class MessageList extends Component {
     }
     componentDidMount() {
 
+    }
+
+    componentDidUpdate() {
+        $("html, body, div").animate({ scrollTop: 9999 },1000);
     }
     
     render() {

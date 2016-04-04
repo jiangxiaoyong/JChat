@@ -58,7 +58,7 @@ class MainBody extends Component {
          }
 
          return(
-             <div className='col-sm-9 col-xs-12 animated bounceInRight'>
+             <div className='col-sm-9 col-xs-12 animated fadeInRight'>
                   <div className="col-inside-lg decor-default chat" style={divStyle} tabindex="5001">
                      <div className="chat-body">
                          <h6>JChat</h6>
