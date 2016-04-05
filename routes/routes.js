@@ -211,12 +211,22 @@ module.exports = function(app, io, pub, sub){
         socket.on('sendMsg', function(payload){
             // When the server receives a message, it sends it to the other person in the room.
             //socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
+
             pub.publish(payload.to, JSON.stringify(payload));
+            //store chat history for all friends, one channel keep all chat history, front end UI do the classification when rendering the chat history
+            pub.RPUSH('chatHistory', JSON.stringify(payload));
+            pub.LTRIM('chatHistory', 0, 100); //keep chat history size to 100
         });
 
         socket.on('iam', function(id) {
 
             sub.subscribe(id) //only subscribe current user ID, friend who want to talk to me, just publishing on my ID
+        })
+
+        socket.on('loadChatHistory', function(id) {
+            pub.LRANGE('chatHistory', 0, -1, function(err, data){
+                socket.emit('chatHistory', data);
+            })
         })
 
 

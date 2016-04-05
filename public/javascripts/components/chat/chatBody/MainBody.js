@@ -18,6 +18,21 @@ class MainBody extends Component {
         socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by current user ID
             dispatch(receiveMessage(msg, activeFriend))
         })
+
+        socket.on('chatHistory', function(data){
+            data.map(function(obj) {
+                var msg = JSON.parse(obj)
+                if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //filter chat history belong to current user and active friend
+                    if(msg.from == currentUser.id) { //message that send from current user
+                        dispatch(sendMessage(msg, currentUser))
+                    }
+                    else if(msg.from == activeFriend.id) { //message that send from active friend
+                        dispatch(receiveMessage(msg, activeFriend))
+                    }
+
+                }
+            })
+        })
     }
 
     componentDidMount() {
@@ -31,8 +46,11 @@ class MainBody extends Component {
             socket.emit('iam', currentUser.id); //report who i am for debugging
         }
 
-        if(nextProps.friendListReducer.availability != this.props.friendListReducer.availability) {
-             activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting friend
+        if(nextProps.friendListReducer.availability != this.props.friendListReducer.availability) { //friend list is available
+            if(nextProps.friendListReducer.fList) {
+              activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting friend
+              socket.emit('loadChatHistory', currentUser.id);//load chat history of all friends
+            }
         }
 
     }
