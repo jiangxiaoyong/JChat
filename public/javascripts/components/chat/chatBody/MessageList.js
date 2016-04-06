@@ -13,13 +13,17 @@ class MessageList extends Component {
         }
     }
     componentDidMount() {
-
+        $("html, body, div").animate({ scrollTop: 9999 },1000);
     }
 
     componentDidUpdate() {
-        $("html, body, div").animate({ scrollTop: 9999 },1000);
     }
-    
+
+    shouldComponentUpdate (nextProps) { //only update when new message need to display on screen
+        return nextProps.chatRecord.length !== this.props.chatRecord.length
+    }
+
+
     render() {
         const { chatRecord } =  this.props
 

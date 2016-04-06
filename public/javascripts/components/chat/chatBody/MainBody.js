@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import InputBoxContainer from '../../../containers/chat/InputBoxContainer'
 import MessageContainer from '../../../containers/chat/MessageContainer'
-import {sendMessage, receiveMessage, resetInputBox } from '../../../actions'
+import {sendMessage, receiveMessage, resetInputBox, doneLoadChatHistory} from '../../../actions'
 import io from 'socket.io-client';
 import {reset} from 'redux-form';
-
-
 
 let socket;
 let activeFriend;
@@ -17,19 +15,23 @@ class MainBody extends Component {
         const {dispatch} = this.props
         socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by current user ID
             dispatch(receiveMessage(msg, activeFriend))
+            $("html, body, div").animate({ scrollTop: 9999 },1000); //scroll down to show new message
         })
 
         socket.on('chatHistory', function(data){
             data.map(function(obj) {
                 var msg = JSON.parse(obj)
-                if(msg.from == currentUser.id) { //message that send from current user
-                    dispatch(sendMessage(msg, currentUser))
-                }
-                else if(msg.from == activeFriend.id) { //message that send from active friend
-                    dispatch(receiveMessage(msg, activeFriend))
-                }
+                if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //filter chat history belong to current user and active friend
+                    if(msg.from == currentUser.id) { //message that send from current user
+                        dispatch(sendMessage(msg, currentUser))
+                    }
+                    else if(msg.from == activeFriend.id) { //message that send from active friend
+                        dispatch(receiveMessage(msg, activeFriend))
+                    }
 
+                }
             })
+            dispatch(doneLoadChatHistory())
         })
     }
 
@@ -47,7 +49,7 @@ class MainBody extends Component {
         if(nextProps.friendListReducer.availability != this.props.friendListReducer.availability) { //friend list is available
             if(nextProps.friendListReducer.fList) {
               activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting friend
-              socket.emit('loadChatHistory', currentUser.id);//load chat history of all friends
+              socket.emit('loadChatHistory', currentUser.id);//load chat history between all friends and me
             }
         }
 
@@ -64,7 +66,7 @@ class MainBody extends Component {
         socket.emit('sendMsg', msg) // send message to back-end nodeJS server over socket io
         this.dispatch(reset('message')) //clear message input box
         this.dispatch(sendMessage(msg, currentUser)) //display sending message on chat record box
-
+        $("html, body, div").animate({ scrollTop: 9999 },1000)//scroll down to show new message
     }
 
     render() {
