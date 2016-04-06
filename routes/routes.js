@@ -213,9 +213,14 @@ module.exports = function(app, io, pub, sub){
             //socket.broadcast.to(socket.room).emit('receive', {msg: data.msg, user: data.user, img: data.img});
 
             pub.publish(payload.to, JSON.stringify(payload));
-            //store chat history for all friends, one channel keep all chat history, front end UI do the classification when rendering the chat history
-            pub.RPUSH('chatHistory', JSON.stringify(payload));
-            pub.LTRIM('chatHistory', 0, 100); //keep chat history size to 100
+
+            //cache chat history at current user redis cache channel
+            pub.RPUSH('chatHistory@' + payload.from, JSON.stringify(payload));
+            pub.LTRIM('chatHistory@' + payload.from, 0, 100); //keep chat history size to 100
+
+            //cache chat history at friend redis cache channel at the same time
+            pub.RPUSH('chatHistory@' + payload.to, JSON.stringify(payload));
+            pub.LTRIM('chatHistory@' + payload.to, 0, 100); //keep chat history size to 100
         });
 
         socket.on('iam', function(id) {
@@ -223,8 +228,8 @@ module.exports = function(app, io, pub, sub){
             sub.subscribe(id) //only subscribe current user ID, friend who want to talk to me, just publishing on my ID
         })
 
-        socket.on('loadChatHistory', function(id) {
-            pub.LRANGE('chatHistory', 0, -1, function(err, data){
+        socket.on('loadChatHistory', function(id) { //load chat history belong to current user
+            pub.LRANGE('chatHistory@' + id, 0, -1, function(err, data){
                 socket.emit('chatHistory', data);
             })
         })
@@ -234,6 +239,7 @@ module.exports = function(app, io, pub, sub){
     });
 
     sub.on('message', function(channel, payload) {
+
         var msg = JSON.parse(payload)
            chat.emit('receiveMsg@' + msg.to, msg); //emit msg to dedicated socket listener specified by message destination
     })

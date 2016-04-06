@@ -22,15 +22,13 @@ class MainBody extends Component {
         socket.on('chatHistory', function(data){
             data.map(function(obj) {
                 var msg = JSON.parse(obj)
-                if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //filter chat history belong to current user and active friend
-                    if(msg.from == currentUser.id) { //message that send from current user
-                        dispatch(sendMessage(msg, currentUser))
-                    }
-                    else if(msg.from == activeFriend.id) { //message that send from active friend
-                        dispatch(receiveMessage(msg, activeFriend))
-                    }
-
+                if(msg.from == currentUser.id) { //message that send from current user
+                    dispatch(sendMessage(msg, currentUser))
                 }
+                else if(msg.from == activeFriend.id) { //message that send from active friend
+                    dispatch(receiveMessage(msg, activeFriend))
+                }
+
             })
         })
     }

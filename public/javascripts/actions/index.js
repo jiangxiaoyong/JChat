@@ -79,10 +79,9 @@ export function fetchPostsIfNeeded(reddit) {
 /*
  ********************************** User Authentication ************************************
  */
-export function loginFailed(response) {
+export function loginFailed() {
     return {
-        type: LOGGED_FAILED,
-        response
+        type: LOGGED_FAILED
     }
 }
 
@@ -107,7 +106,10 @@ export function authUserInfo(usrInfo, url) {
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     return response.json();
-                } else {
+                } else { //login failed
+                    dispatch(loginFailed())
+                    var error = new Error()
+                    throw error
                 }
         })
             .then( json => {
