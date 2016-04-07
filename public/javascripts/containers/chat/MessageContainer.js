@@ -7,7 +7,6 @@ const mapStateToProps = (state) => {
     const { messageReducer } = state
     let chatRecord= messageReducer || []
 
-
     return {
         chatRecord,
     }

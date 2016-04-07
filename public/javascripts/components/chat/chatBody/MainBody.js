@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import InputBoxContainer from '../../../containers/chat/InputBoxContainer'
 import MessageContainer from '../../../containers/chat/MessageContainer'
-import {sendMessage, receiveMessage, resetInputBox, doneLoadChatHistory} from '../../../actions'
+import {sendMessage, receiveMessage, resetInputBox, switchFriendDone } from '../../../actions'
 import io from 'socket.io-client';
 import {reset} from 'redux-form';
 
@@ -28,10 +28,9 @@ class MainBody extends Component {
                     else if(msg.from == activeFriend.id) { //message that send from active friend
                         dispatch(receiveMessage(msg, activeFriend))
                     }
-
                 }
             })
-            dispatch(doneLoadChatHistory())
+            $("html, body, div").animate({ scrollTop: 9999 },1000);//scroll down to bottom of latest chat after each loading of chat history, or switching between friend
         })
     }
 
@@ -48,12 +47,23 @@ class MainBody extends Component {
 
         if(nextProps.friendListReducer.availability != this.props.friendListReducer.availability) { //friend list is available
             if(nextProps.friendListReducer.fList) {
-              activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting friend
+              activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting frienda, loading the first friend in the list by default
               socket.emit('loadChatHistory', currentUser.id);//load chat history between all friends and me
             }
         }
 
+        if(nextProps.friendListReducer.isSwitching ) { //case of switching chatting friend
+            activeFriend = nextProps.friendListReducer.fList[nextProps.friendListReducer.switchTo]
+            socket.emit('loadChatHistory', currentUser.id);
+            this.props.dispatch(switchFriendDone()) // set is switching flag to false to avoid entering this condition
+        }
+
     }
+
+    shouldComponentUpdate (nextProps) { //only update when new message need to display on screen
+           //return nextProps.friendListReducer.isSwitching != this.props.friendListReducer.isSwitching
+    }
+
     handleSendMsg(data) {
         var msg = {
                         from: currentUser.id,

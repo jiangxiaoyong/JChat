@@ -13,6 +13,8 @@ export const RECEIVE_USERINFO = 'RECEIVE_USERINFO'
 export const RECEIVE_CHATRECORD = 'RECEIVE_CHATRECORD'
 export const SEND_MESSAGE = 'SEND_MESSAGE'
 export const RECEIVE_MESSAGE = "RECEIVE_MESSAGE"
+export const SWITCH_FRIEND = 'SWITCH_FRIEND'
+export const SWITCH_FRIEND_DONE = 'SWITCH_FRIEND_DONE'
 
 export function selectReddit(reddit) {
     return {
@@ -144,6 +146,20 @@ export function receiveUserInfo(userInfo) {
 /*
  ************************************** Friend List ************************************************
  */
+
+export function switchFriend(id) {
+    return {
+        type: SWITCH_FRIEND,
+        id
+    }
+}
+
+export function switchFriendDone(id) {
+    return {
+        type: SWITCH_FRIEND_DONE,
+        id
+    }
+}
 
 export function requestFriendList() {
     return {

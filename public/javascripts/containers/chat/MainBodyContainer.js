@@ -3,9 +3,10 @@ import React, { Component, PropTypes } from 'react'
 import MainBody from '../../components/chat/chatBody/MainBody'
 
 let mapStateToProps = (state) => {
+
     return {
         friendListReducer: state.friendListReducer,
-        currentUser: state.userInfoReducer
+        currentUser: state.userInfoReducer,
     }
 }
 

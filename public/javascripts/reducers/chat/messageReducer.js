@@ -1,4 +1,4 @@
-import { SEND_MESSAGE, RECEIVE_MESSAGE, RECEIVE_CHATRECORD } from '../../actions'
+import { SEND_MESSAGE, RECEIVE_MESSAGE, RECEIVE_CHATRECORD, SWITCH_FRIEND } from '../../actions'
 
 let convertMsg = (state, action) => {
     switch(action.type) {
@@ -41,6 +41,8 @@ let messageReducer = (state = [], action) => {
             return Object.assign({}, state, {
                 chatRecord: action.chatRecord
             })
+        case SWITCH_FRIEND:
+            return [] //clear chat record on screen when switching chatting friend
         default:
             return state
     }

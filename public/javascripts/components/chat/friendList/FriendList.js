@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Friend from './Friend'
-import { fetchFriendListIfNeeded, fetchUserInfo } from '../../../actions'
+import { fetchFriendListIfNeeded, fetchUserInfo, switchFriend} from '../../../actions'
 
 class FriendList extends Component {
 
@@ -17,6 +17,11 @@ class FriendList extends Component {
         }
     }
 
+    onFriendClick(slot) {
+        const { dispatch } = this.props
+        dispatch(switchFriend(slot)) //switch to another friend to chat, use the slot number to identify target friend. And message reducer will clear current chat record
+    }
+
     render() {
         const {isFetching, fList, userInfoAvailability } =  this.props
         var divStyle = {
@@ -31,7 +36,8 @@ class FriendList extends Component {
                         <h6>Friends</h6>
                         {
                             isFetching ? <h2>Loading...</h2> : lists.map((info, i) =>
-                                                                <Friend info={info}/>)
+                                                                <Friend info={info}
+                                                                onClick={()=>this.onFriendClick(i)}/>)
                         }
 
                     </div>
