@@ -14,7 +14,9 @@ class MainBody extends Component {
     handleIncomingMsg() {
         const {dispatch} = this.props
         socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by current user ID
-            dispatch(receiveMessage(msg, activeFriend))
+            if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //only accept and show message that chatting between current user and active friend
+                dispatch(receiveMessage(msg, activeFriend))
+            }
             $("html, body, div").animate({ scrollTop: 9999 },1000); //scroll down to show new message
         })
 
@@ -58,10 +60,6 @@ class MainBody extends Component {
             this.props.dispatch(switchFriendDone()) // set is switching flag to false to avoid entering this condition
         }
 
-    }
-
-    shouldComponentUpdate (nextProps) { //only update when new message need to display on screen
-           //return nextProps.friendListReducer.isSwitching != this.props.friendListReducer.isSwitching
     }
 
     handleSendMsg(data) {

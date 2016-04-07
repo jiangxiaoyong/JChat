@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Friend from './Friend'
 import { fetchFriendListIfNeeded, fetchUserInfo, switchFriend} from '../../../actions'
+import $ from 'jquery'
 
 class FriendList extends Component {
 
@@ -20,7 +21,9 @@ class FriendList extends Component {
     onFriendClick(slot) {
         const { dispatch } = this.props
         dispatch(switchFriend(slot)) //switch to another friend to chat, use the slot number to identify target friend. And message reducer will clear current chat record
+
     }
+
 
     render() {
         const {isFetching, fList, userInfoAvailability } =  this.props
