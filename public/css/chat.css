@@ -245,6 +245,36 @@ body{
     line-height: 43px;
 }
 
+/*----------------- add friend UI --------------------*/
+
+.add_friend_wrapper {
+    position: absolute;
+    width: 90%;
+    background-color: #fff;
+    padding: 20px 20px;
+    top: 0;
+}
+.add_friend_wrapper .add_friend_input_wrapper {
+    display: inline-block;
+    height: 30px;
+    border-radius: 25px;
+    border: 1px solid #bcbdc0;
+    width: calc(100% - 0px);
+    position: relative;
+    padding: 0 20px;
+}
+.add_friend_wrapper .add_friend_input_wrapper .add_friend_input {
+    border: none;
+    height: 100%;
+    box-sizing: border-box;
+    width: calc(100% - 40px);
+    position: absolute;
+    outline-width: 0;
+    color: gray;
+}
+
+/*-------------------- end of add friend -----------------------*/
+
 .user {
     background-color: #fff;
     border-radius: 10px;
