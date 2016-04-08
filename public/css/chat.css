@@ -111,6 +111,7 @@ body{
     display: block;
     border-radius: 20px;
     height: 100%;
+    transition: all 0.1s linear;
 }
 .chat-body .answer .name {
     font-size: 14px;
@@ -242,5 +243,22 @@ body{
     font-weight: 300;
     display: inline-block;
     line-height: 43px;
+}
+
+.user {
+    background-color: #fff;
+    border-radius: 10px;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.2s linear;
+}
+
+.user:hover {
+    color: #fff;
+    background-color: #007eff;
+}
+
+.chat .avatar img:hover {
+    height: 120%;
 }
  /*--------------------------------------end--------------------------------------------------------*/

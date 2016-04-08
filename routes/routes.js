@@ -42,6 +42,7 @@ module.exports = function(app, io, pub, sub){
                 list.push({
                     id: item.id,
                     chID: item.chID,
+                    userMood: item.userMood,
                     userName: item.userName,
                     userStatus: item.userStatue,
                     imgSrc: item.imgSrc

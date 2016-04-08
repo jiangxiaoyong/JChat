@@ -17,6 +17,7 @@ var userSchema = mongoose.Schema({
         {
             id       : String,
             chID     : String,
+            userMood : String,
             userName : String,
             userStatus     : String,
             imgSrc   : String
