@@ -47,13 +47,16 @@ class MainBody extends Component {
             socket.emit('iam', currentUser.id); //report who i am for debugging
         }
 
-        if(nextProps.friendListReducer.availability != this.props.friendListReducer.availability) { //friend list is available
-            if(nextProps.friendListReducer.fList) {
-              activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting frienda, loading the first friend in the list by default
-              socket.emit('loadChatHistory', currentUser.id);//load chat history between all friends and me
-            }
-        }
+        //if(nextProps.friendListReducer.availability && !nextProps.friendListReducer.isSwitching) { //friend list is available
+        //    if(nextProps.friendListReducer.fList) {
+        //      activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting frienda, loading the first friend in the list by default
+        //      socket.emit('loadChatHistory', currentUser.id);//load chat history between all friends and me
+        //    }
+        //}
 
+        /*
+            initially, chat record page is empty and will be filled with content after user clicking or switching between friend
+         */
         if(nextProps.friendListReducer.isSwitching ) { //case of switching chatting friend
             activeFriend = nextProps.friendListReducer.fList[nextProps.friendListReducer.switchTo]
             socket.emit('loadChatHistory', currentUser.id);

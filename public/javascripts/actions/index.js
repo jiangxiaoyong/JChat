@@ -17,6 +17,7 @@ export const SWITCH_FRIEND = 'SWITCH_FRIEND'
 export const SWITCH_FRIEND_DONE = 'SWITCH_FRIEND_DONE'
 export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS'
 export const ADD_FRIEND_FAILED = 'ADD_FRIEND_FAILED'
+export const REFRESH_FRIEND_LIST = 'REFRESH_FRIEND_LIST'
 
 
 export function selectReddit(reddit) {
@@ -163,6 +164,7 @@ export function addFriend(email) {
         })
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
+                    dispatch(refreshFriendList())
                     return response.json();
                 } else { //add friend failed
                     //dispatch(addFriendFailed())
@@ -171,7 +173,7 @@ export function addFriend(email) {
                 }
         })
             .then(
-                dispatch(addFriendSuccess())
+
             )
             .catch( error => {
             console.log('add friend failed ' + error.message);
@@ -180,15 +182,9 @@ export function addFriend(email) {
     }
 }
 
-export function addFriendSuccess() {
+export function refreshFriendList() {
     return {
-        type: ADD_FRIEND_SUCCESS
-    }
-}
-
-export function addFriendFailed() {
-    return {
-        type: ADD_FRIEND_FAILED
+        type: REFRESH_FRIEND_LIST
     }
 }
 
@@ -246,7 +242,7 @@ export function fetchFriendListIfNeeded(userId) {
 
 function shouldFetchFriendList(state) {
 
-    if (state.friendListReducer.isFetching){
+    if (state.friendListReducer.isFetching || state.friendListReducer.refresh){
         return true
     }
     else{

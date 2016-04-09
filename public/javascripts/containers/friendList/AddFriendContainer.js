@@ -6,11 +6,13 @@ import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
 import AddFriend from '../../components/chat/friendList/AddFriend'
 import {addFriend} from '../../actions'
+import {reset} from 'redux-form';
 
 class add extends Component {
 
     handleSubmit(data) {
         this.props.dispatch(addFriend(data))
+        this.props.dispatch(reset('addFriend')) //clear input field of add friend
     }
 
     render() {

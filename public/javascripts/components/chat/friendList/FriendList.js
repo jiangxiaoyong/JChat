@@ -17,6 +17,13 @@ class FriendList extends Component {
             const { dispatch, userId } = nextProps
             dispatch(fetchFriendListIfNeeded(userId))
         }
+
+        //case of adding friend, user info is available, but friend list needed to be refresh
+        //refresh friend list only after page loaded, that means user info and old friend list available
+        if(nextProps.refresh && nextProps.userInfoAvailability && nextProps.availability) {
+            const { dispatch, userId } = nextProps
+            dispatch(fetchFriendListIfNeeded(userId))
+        }
     }
 
     onFriendClick(slot) {
