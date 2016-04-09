@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import InputBoxContainer from '../../../containers/chat/InputBoxContainer'
 import MessageContainer from '../../../containers/chat/MessageContainer'
-import {sendMessage, receiveMessage, resetInputBox, switchFriendDone } from '../../../actions'
+import {sendMessage, receiveMessage, resetInputBox, switchFriendDone, refreshFriendList } from '../../../actions'
 import io from 'socket.io-client';
 import {reset} from 'redux-form';
 
@@ -33,6 +33,11 @@ class MainBody extends Component {
                 }
             })
             $("html, body, div").animate({ scrollTop: 9999 },1000);//scroll down to bottom of latest chat after each loading of chat history, or switching between friend
+        })
+
+        //listening on refresh event, server will fire this event when it finish storing new friend into corresponding friend list of user, and inform both of them
+        socket.on('refreshFriendList@' + currentUser.id, function() {
+            dispatch(refreshFriendList())
         })
     }
 

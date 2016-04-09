@@ -164,7 +164,7 @@ export function addFriend(email) {
         })
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
-                    dispatch(refreshFriendList())
+
                     return response.json();
                 } else { //add friend failed
                     //dispatch(addFriendFailed())

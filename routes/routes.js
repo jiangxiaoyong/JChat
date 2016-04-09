@@ -76,9 +76,7 @@ module.exports = function(app, io, pub, sub){
 
             // check to see if a friend exist in the database with that email
             if (!user) { //friend does not exist
-                 res.json({
-                    status: 404
-                });
+                 res.status(404).send('not found');
             } else {
                 /*
                     Two step for adding new friend
@@ -135,6 +133,9 @@ module.exports = function(app, io, pub, sub){
                         }
                     }
                 );
+
+                chat.emit('refreshFriendList@' + ObjectId(req.user._doc._id.id).toString()); //inform current user to refresh it's friend list
+                chat.emit('refreshFriendList@' + ObjectId(currentUser_friendToBeAdded._doc._id.id).toString() ); //inform your friend to update it's friend list
             }
 
         });
