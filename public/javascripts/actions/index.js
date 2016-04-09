@@ -15,6 +15,9 @@ export const SEND_MESSAGE = 'SEND_MESSAGE'
 export const RECEIVE_MESSAGE = "RECEIVE_MESSAGE"
 export const SWITCH_FRIEND = 'SWITCH_FRIEND'
 export const SWITCH_FRIEND_DONE = 'SWITCH_FRIEND_DONE'
+export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS'
+export const ADD_FRIEND_FAILED = 'ADD_FRIEND_FAILED'
+
 
 export function selectReddit(reddit) {
     return {
@@ -147,6 +150,54 @@ export function receiveUserInfo(userInfo) {
  ************************************** Friend List ************************************************
  */
 
+export function addFriend(email) {
+     return dispatch => {
+        return fetch('/addFriend', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body:  JSON.stringify(email),
+            credentials: 'include' //Should you want to make a fetch request with credentials such as cookies, you should set the credentials of the request to “include”.
+        })
+            .then(response => {
+                if (response.status >= 200 && response.status < 300) {
+                    return response.json();
+                } else { //add friend failed
+                    //dispatch(addFriendFailed())
+                    var error = new Error()
+                    throw error
+                }
+        })
+            .then(
+                dispatch(addFriendSuccess())
+            )
+            .catch( error => {
+            console.log('add friend failed ' + error.message);
+        });
+
+    }
+}
+
+export function addFriendSuccess() {
+    return {
+        type: ADD_FRIEND_SUCCESS
+    }
+}
+
+export function addFriendFailed() {
+    return {
+        type: ADD_FRIEND_FAILED
+    }
+}
+
+export function switchFriend(id) {
+    return {
+        type: SWITCH_FRIEND,
+        id
+    }
+}
 export function switchFriend(id) {
     return {
         type: SWITCH_FRIEND,

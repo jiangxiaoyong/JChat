@@ -10,6 +10,10 @@
 
 var gravatar = require('gravatar');
 
+// mongoose
+var mongoose = require('mongoose');
+ObjectId = mongoose.Types.ObjectId;
+
 // load up the user model
 var User       		= require('../config/models/user');
 
@@ -63,26 +67,81 @@ module.exports = function(app, io, pub, sub){
 
     })
 
+    app.post('/addFriend', isLoggedIn, function(req, res) {
+
+        User.findOne({ 'info.email' :  req.body.email }, function(err, user) {
+            // if there are any errors, return the error
+            if (err)
+                return err
+
+            // check to see if a friend exist in the database with that email
+            if (!user) { //friend does not exist
+                 res.json({
+                    status: 404
+                });
+            } else {
+                /*
+                    Two step for adding new friend
+                    1: if friend can be find in mongodb, add friend to the friend list of current user
+                    2: add current user to friend's friend list at the same time
+                 */
+
+                //construct information of friend to be added for current user
+                var currentUser_friendToBeAdded = user;
+                var currentUser_friendToBeAddedInfo_id = ObjectId(currentUser_friendToBeAdded._doc._id.id).toString();
+                var currentUser_friendToBeAddedInfo_userName = currentUser_friendToBeAdded._doc.info.userName;
+                var currentUser_friendToBeAddedInfo_imgSrc = currentUser_friendToBeAdded._doc.info.imgSrc;
+                var currentUser_friendToBeAddedInfo = {
+                    'id' : currentUser_friendToBeAddedInfo_id,
+                    'userName' : currentUser_friendToBeAddedInfo_userName,
+                    'imgSrc' : currentUser_friendToBeAddedInfo_imgSrc
+                }
+                //update and insert new friend into current user friend list
+                User.findByIdAndUpdate(
+                    ObjectId(req.user._doc._id.id).toString(),
+                    {$push: {'friendList': currentUser_friendToBeAddedInfo }},
+                    function(err, model) {
+                        if (err)
+                            console.log(err);
+                        else {
+                            //res.json({
+                            //    status: 200
+                            //});
+                        }
+                    }
+                );
+
+                //update and insert current user into friend's friend list
+                var friend_friendToBeAdded = req.user;
+                var friend_friendToBeAddedInfo_id = ObjectId(friend_friendToBeAdded._doc._id.id).toString();
+                var friend_friendToBeAddedInfo_userName = friend_friendToBeAdded._doc.info.userName;
+                var friend_friendToBeAddedInfo_imgSrc = friend_friendToBeAdded._doc.info.imgSrc;
+                var friend_friendToBeAddedInfo = {
+                    'id' : friend_friendToBeAddedInfo_id,
+                    'userName' : friend_friendToBeAddedInfo_userName,
+                    'imgSrc' : friend_friendToBeAddedInfo_imgSrc
+                }
+                //update and insert new friend into current user friend list
+                User.findByIdAndUpdate(
+                    ObjectId(currentUser_friendToBeAdded._doc._id.id).toString(),
+                    {$push: {'friendList': friend_friendToBeAddedInfo }},
+                    function(err, model) {
+                        if (err)
+                            console.log(err);
+                        else {
+                            res.json({
+                                status: 200
+                            });
+                        }
+                    }
+                );
+            }
+
+        });
+    })
+
      app.get('/chatRecord', isLoggedIn, function(req, res){
 
-        var mockList = [
-            {
-               type: 'answer left',
-               userName: 'n1',
-               userStatus: 'online',
-               imgSrc: '/images/unnamed.jpg',
-               text: 'hahasdfasdhf',
-               time: '2016.3.24'
-            },
-            {
-               type: 'answer right',
-               userName: 'n2',
-               userStatus: 'online',
-               imgSrc: '/images/unnamed.jpg',
-               text: 'reply message',
-               time: '2016.3.24'
-            }
-        ]
         //return mock friend list
         res.contentType('application/json');
         res.send(JSON.stringify(

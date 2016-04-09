@@ -11,12 +11,12 @@ var userSchema = mongoose.Schema({
         email        : String,
         password     : String,
         userName     : String,
+        userMood     : String,
         imgSrc       : String
     },
     friendList       : [
         {
             id       : String,
-            chID     : String,
             userMood : String,
             userName : String,
             userStatus     : String,

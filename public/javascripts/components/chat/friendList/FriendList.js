@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Friend from './Friend'
-import AddFriend from './AddFriend'
 import { fetchFriendListIfNeeded, fetchUserInfo, switchFriend} from '../../../actions'
+import AddFriendContainer from '../../../containers/friendList/AddFriendContainer'
 import $ from 'jquery'
 
 class FriendList extends Component {
@@ -35,7 +35,7 @@ class FriendList extends Component {
         var lists = fList
         return (
              <div className="col-sm-3 col-xs-12 animated fadeInLeft">
-                <AddFriend />
+                <AddFriendContainer  />
                 <div className="col-inside-lg decor-default chat" style={divStyle} tabindex="5000">
                     <div className="chat-users">
                         <h6>Friends</h6>
