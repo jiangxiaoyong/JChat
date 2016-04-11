@@ -4,6 +4,7 @@ let userInfoReducer = (state = {
     id:'',
     userName: 'unnamed',
     imgSrc: '/images/Mario.ico',
+    email: '',
     availability: false
 }, action) => {
     switch (action.type) {
@@ -12,6 +13,7 @@ let userInfoReducer = (state = {
                 id: action.userInfo._id,
                 userName: action.userInfo.info.userName,
                 imgSrc: action.userInfo.info.imgSrc,
+                email: action.userInfo.info.email,
                 availability: true
             })
 

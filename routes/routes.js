@@ -92,7 +92,8 @@ module.exports = function(app, io, pub, sub){
                 var currentUser_friendToBeAddedInfo = {
                     'id' : currentUser_friendToBeAddedInfo_id,
                     'userName' : currentUser_friendToBeAddedInfo_userName,
-                    'imgSrc' : currentUser_friendToBeAddedInfo_imgSrc
+                    'imgSrc' : currentUser_friendToBeAddedInfo_imgSrc,
+                    'userMood': 'happy mood'
                 }
                 //update and insert new friend into current user friend list
                 User.findByIdAndUpdate(
@@ -117,7 +118,8 @@ module.exports = function(app, io, pub, sub){
                 var friend_friendToBeAddedInfo = {
                     'id' : friend_friendToBeAddedInfo_id,
                     'userName' : friend_friendToBeAddedInfo_userName,
-                    'imgSrc' : friend_friendToBeAddedInfo_imgSrc
+                    'imgSrc' : friend_friendToBeAddedInfo_imgSrc,
+                    'userMood': 'happy mood'
                 }
                 //update and insert new friend into current user friend list
                 User.findByIdAndUpdate(
@@ -127,9 +129,7 @@ module.exports = function(app, io, pub, sub){
                         if (err)
                             console.log(err);
                         else {
-                            res.json({
-                                status: 200
-                            });
+                            res.status(200).send('success');
                         }
                     }
                 );

@@ -6,13 +6,13 @@ body{
     padding-bottom: 0;
 }
 .col-inside-lg {
-    padding-top: 20px;
+    padding-top: 0px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 110px;
 }
 .chat {
-    height: calc(100vh - 45px);
+    height: calc(100vh - 110px);
 }
 .decor-default {
     background-color: #ffffff;
@@ -248,11 +248,9 @@ body{
 /*----------------- add friend UI --------------------*/
 
 .add_friend_wrapper {
-    position: absolute;
-    width: 90%;
+    width: 100%;
     background-color: #fff;
     padding: 20px 20px;
-    top: 0;
 }
 .add_friend_wrapper .add_friend_input_wrapper {
     display: inline-block;
@@ -284,11 +282,37 @@ body{
 }
 
 .user:hover {
-    color: #fff;
-    background-color: #007eff;
+    background-color: #f8f8f8;
 }
 
 .chat .avatar img:hover {
     height: 120%;
 }
+
+/*---------------------- user profile and current chatting user --------------------*/
+.ms-user {
+    padding: 15px;
+    background: #f8f8f8;
+}
+
+.img-avatar {
+    height: 37px;
+    border-radius: 2px;
+    width: 37px;
+}
+
+.ms-user>div {
+    overflow: hidden;
+    padding: 3px 5px 0 15px;
+    font-size: 11px;
+}
+
+.action-header {
+    position: relative;
+    background: #f8f8f8;
+    padding: 15px 13px 15px 17px;
+}
+
+
+
  /*--------------------------------------end--------------------------------------------------------*/

@@ -18,6 +18,7 @@ export const SWITCH_FRIEND_DONE = 'SWITCH_FRIEND_DONE'
 export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS'
 export const ADD_FRIEND_FAILED = 'ADD_FRIEND_FAILED'
 export const REFRESH_FRIEND_LIST = 'REFRESH_FRIEND_LIST'
+export const SET_ATVIE_FRIEND = 'SET_ATVIE_FRIEND'
 
 
 export function selectReddit(reddit) {
@@ -290,5 +291,12 @@ export function fetchChatRecord(userId) {
         })
                .then(response => response.json())
                .then(json => dispatch(receiveChatRecord(json)))
+    }
+}
+
+export function setActiveFriend(activeFriend) {
+    return {
+        type: SET_ATVIE_FRIEND,
+        activeFriend
     }
 }

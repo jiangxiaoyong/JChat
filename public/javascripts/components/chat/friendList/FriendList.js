@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Friend from './Friend'
 import { fetchFriendListIfNeeded, fetchUserInfo, switchFriend} from '../../../actions'
 import AddFriendContainer from '../../../containers/friendList/AddFriendContainer'
+import ProfileContainer from '../../../containers/user/ProfileContainer'
 import $ from 'jquery'
 
 class FriendList extends Component {
@@ -37,15 +38,16 @@ class FriendList extends Component {
         const {isFetching, fList, userInfoAvailability } =  this.props
         var divStyle = {
             overflow: 'hidden',
-            outline: 'none'
+            outline: 'none',
+            height: 'calc(100vh - 194px)'
         }
         var lists = fList
         return (
              <div className="col-sm-3 col-xs-12 animated fadeInLeft">
+                <ProfileContainer />
                 <AddFriendContainer  />
                 <div className="col-inside-lg decor-default chat" style={divStyle} tabindex="5000">
                     <div className="chat-users">
-                        <h6>Friends</h6>
                         {
                             isFetching ? <h2>Loading...</h2> : lists.map((info, i) =>
                                                                 <Friend info={info}

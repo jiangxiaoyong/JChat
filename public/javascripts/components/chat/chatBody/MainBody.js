@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import InputBoxContainer from '../../../containers/chat/InputBoxContainer'
 import MessageContainer from '../../../containers/chat/MessageContainer'
-import {sendMessage, receiveMessage, resetInputBox, switchFriendDone, refreshFriendList } from '../../../actions'
+import ActiveFriendContainer from '../../../containers/chat/ActiveFriendContainer'
+import {sendMessage, receiveMessage, resetInputBox, switchFriendDone, refreshFriendList, setActiveFriend } from '../../../actions'
 import io from 'socket.io-client';
 import {reset} from 'redux-form';
 
@@ -65,6 +66,7 @@ class MainBody extends Component {
         if(nextProps.friendListReducer.isSwitching ) { //case of switching chatting friend
             activeFriend = nextProps.friendListReducer.fList[nextProps.friendListReducer.switchTo]
             socket.emit('loadChatHistory', currentUser.id);
+            this.props.dispatch(setActiveFriend(activeFriend)) //set the active friend info showing on top of chatting page
             this.props.dispatch(switchFriendDone()) // set is switching flag to false to avoid entering this condition
         }
 
@@ -93,9 +95,9 @@ class MainBody extends Component {
 
          return(
              <div className='col-sm-9 col-xs-12 animated fadeInRight'>
+                  <ActiveFriendContainer />
                   <div className="col-inside-lg decor-default chat" style={divStyle} tabindex="5001">
                      <div className="chat-body">
-                         <h6>JChat</h6>
                          <MessageContainer />
                      </div>
                   </div>

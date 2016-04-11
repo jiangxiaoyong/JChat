@@ -1,4 +1,4 @@
-import { REQUEST_FRIENDLIST, RECEIVE_FRIENDLIST, SWITCH_FRIEND, SWITCH_FRIEND_DONE, REFRESH_FRIEND_LIST} from '../../actions'
+import { REQUEST_FRIENDLIST, RECEIVE_FRIENDLIST, SWITCH_FRIEND, SWITCH_FRIEND_DONE, REFRESH_FRIEND_LIST, SET_ATVIE_FRIEND} from '../../actions'
 
 let friendListReducer = (state = {
     isFetching: true,
@@ -33,8 +33,12 @@ let friendListReducer = (state = {
                 switchTo: ''
             })
         case REFRESH_FRIEND_LIST:
-              return Object.assign({}, state, {
+            return Object.assign({}, state, {
                  refresh: true
+            })
+        case SET_ATVIE_FRIEND:
+             return Object.assign({}, state, {
+                 activeFriend: action.activeFriend
             })
         default:
             return state
