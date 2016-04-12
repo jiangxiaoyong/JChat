@@ -92,7 +92,9 @@ class MainBody extends Component {
             overflow: 'hidden',
             outline: 'none'
          }
-
+        /*
+            show input box when there is a friend has been selected
+         */
          return(
              <div className='col-sm-9 col-xs-12 animated fadeInRight'>
                   <ActiveFriendContainer />
@@ -101,9 +103,11 @@ class MainBody extends Component {
                          <MessageContainer />
                      </div>
                   </div>
-                  <div className='bottom_wrapper'>
-                      <InputBoxContainer handleSendMsg = {this.handleSendMsg} />
-                  </div>
+                  { activeFriend ? <div className='bottom_wrapper'>
+                                          <InputBoxContainer handleSendMsg = {this.handleSendMsg} />
+                                   </div>
+                                 : ''
+                  }
              </div>
          )
     }
