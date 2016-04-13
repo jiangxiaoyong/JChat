@@ -7,7 +7,7 @@ let friendListReducer = (state = {
     refresh: false,
     switchTo : '',
     fList: [],
-    activeFriend: {}
+    activeFriend: {'imgSrc': 'images/questionMark.png'}
 }, action) => {
     switch (action.type) {
         case REQUEST_FRIENDLIST:
