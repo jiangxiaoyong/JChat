@@ -63,7 +63,7 @@ module.exports = function(passport) {
                     newUser.info.password = newUser.generateHash(password); // use the generateHash function in our user model
                     newUser.info.userName = req.body.userName;
                     newUser.info.userMood = 'good mood';
-                    newUser.info.imgSrc   = '/images/avatar/avatar' + getRandomInt(1,8) + '.png'; //random select picture from avatar pool
+                    newUser.info.imgSrc   = '/images/avatar/avatar' + getRandomInt(1,9) + '.png'; //random select picture from avatar pool
 
                     // save the user
                     newUser.save(function(err) {
