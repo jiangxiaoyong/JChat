@@ -27,9 +27,10 @@ class FriendList extends Component {
         }
     }
 
-    onFriendClick(slot) {
+    onFriendClick(slot, fId) {
         const { dispatch } = this.props
-        dispatch(switchFriend(slot)) //switch to another friend to chat, use the slot number to identify target friend. And message reducer will clear current chat record
+        dispatch(switchFriend(slot, fId)) //switch to another friend to chat, use the slot number to identify target friend. And message reducer will clear current chat record
+                                            // slot number used for locating switching friend on friend list, fId used for clearing alert of unread msg on non-active friend avatar
 
     }
 
@@ -51,7 +52,7 @@ class FriendList extends Component {
                         {
                             isFetching ? <h2>Loading...</h2> : lists.map((info, i) =>
                                                                 <Friend info={info}
-                                                                onClick={()=>this.onFriendClick(i)}/>)
+                                                                onClick={()=>this.onFriendClick(i, info.id)}/>)
                         }
 
                     </div>

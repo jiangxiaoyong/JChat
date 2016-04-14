@@ -20,7 +20,8 @@ var userSchema = mongoose.Schema({
             userMood : String,
             userName : String,
             userStatus     : String,
-            imgSrc   : String
+            imgSrc   : String,
+            unReadMsg: Boolean
         }
     ],
     facebook         : {

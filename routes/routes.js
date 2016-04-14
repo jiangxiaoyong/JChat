@@ -45,11 +45,11 @@ module.exports = function(app, io, pub, sub){
             user.friendList.forEach(function(item){
                 list.push({
                     id: item.id,
-                    chID: item.chID,
                     userMood: item.userMood,
                     userName: item.userName,
                     userStatus: item.userStatue,
-                    imgSrc: item.imgSrc
+                    imgSrc: item.imgSrc,
+                    unReadMsg: item.unReadMsg
                 })
             })
         }).then(function(){
@@ -93,7 +93,8 @@ module.exports = function(app, io, pub, sub){
                     'id' : currentUser_friendToBeAddedInfo_id,
                     'userName' : currentUser_friendToBeAddedInfo_userName,
                     'imgSrc' : currentUser_friendToBeAddedInfo_imgSrc,
-                    'userMood': 'happy mood'
+                    'userMood': 'happy mood',
+                    'unReadMsg': false
                 }
                 //update and insert new friend into current user friend list
                 User.findByIdAndUpdate(
@@ -119,7 +120,8 @@ module.exports = function(app, io, pub, sub){
                     'id' : friend_friendToBeAddedInfo_id,
                     'userName' : friend_friendToBeAddedInfo_userName,
                     'imgSrc' : friend_friendToBeAddedInfo_imgSrc,
-                    'userMood': 'happy mood'
+                    'userMood': 'happy mood',
+                    'unReadMsg': false
                 }
                 //update and insert new friend into current user friend list
                 User.findByIdAndUpdate(

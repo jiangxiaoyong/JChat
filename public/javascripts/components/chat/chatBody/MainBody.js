@@ -2,9 +2,16 @@ import React, { Component, PropTypes } from 'react'
 import InputBoxContainer from '../../../containers/chat/InputBoxContainer'
 import MessageContainer from '../../../containers/chat/MessageContainer'
 import ActiveFriendContainer from '../../../containers/chat/ActiveFriendContainer'
-import {sendMessage, receiveMessage, resetInputBox, switchFriendDone, refreshFriendList, setActiveFriend } from '../../../actions'
 import io from 'socket.io-client';
 import {reset} from 'redux-form';
+import {sendMessage,
+        receiveMessage,
+        resetInputBox,
+        switchFriendDone,
+        refreshFriendList,
+        setActiveFriend,
+        msgFromNonActiveFriend } from '../../../actions'
+
 
 let socket;
 let activeFriend;
@@ -17,8 +24,11 @@ class MainBody extends Component {
         socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by current user ID
             if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //only accept and show message that chatting between current user and active friend
                 dispatch(receiveMessage(msg, activeFriend))
+                $("html, body, div").animate({ scrollTop: 9999 },1000); //scroll down to show new message
+            } else {
+                dispatch(msgFromNonActiveFriend(msg.from))//show alert of unread msg for non active user
             }
-            $("html, body, div").animate({ scrollTop: 9999 },1000); //scroll down to show new message
+
         })
 
         socket.on('chatHistory', function(data){
