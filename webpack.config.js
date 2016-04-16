@@ -9,45 +9,20 @@ var webPackDevServerPort = 3000;
 module.exports = {
     devtool: "source-map", // for debugging
     entry: {
-        todo:[
-            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
-            'webpack/hot/only-dev-server',
-            //index: './public/javascripts/home.js',
-            //auth: './public/javascripts/auth.js'
-            './public/javascripts/index.js'
-            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
-        ],
         login:[
             'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
             'webpack/hot/only-dev-server',
-            //index: './public/javascripts/home.js',
-            //auth: './public/javascripts/auth.js'
             './public/javascripts/login.js'
-            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
         ],
          signup:[
             'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
             'webpack/hot/only-dev-server',
-            //index: './public/javascripts/home.js',
-            //auth: './public/javascripts/auth.js'
             './public/javascripts/signup.js'
-            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
         ],
-        async:[
+        chatPage:[
             'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
             'webpack/hot/only-dev-server',
-            //index: './public/javascripts/home.js',
-            //auth: './public/javascripts/auth.js'
-            './public/javascripts/index.js'
-            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
-        ],
-         chatPage:[
-            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
-            'webpack/hot/only-dev-server',
-            //index: './public/javascripts/home.js',
-            //auth: './public/javascripts/auth.js'
             './public/javascripts/chatPage.js'
-            //vendors: ['bootstrap', 'jasny', 'moment', 'pace', 'typed', 'jquery']
         ]
 
     },
@@ -78,16 +53,6 @@ module.exports = {
         stats: {colors: true},
         //used for cross origin request, like node running on 8080, will get data from webpack hot-reload webpack-dev-server running on 3000,
         headers: {'Access-Control-Allow-Origin': 'http://192.168.99.100:8080','Access-Control-Allow-Credentials': 'true'}
-    },
-    resolve: {
-        /*alias: {
-            bootstrap: __dirname + '/public/javascripts/lib/bootstrap.min.js',
-            jasny: __dirname + '/public/javascripts/lib/jasny-bootstrap.min.js',
-            moment: __dirname + '/public/javascripts/lib/moment.min.js',
-            pace: __dirname + '/public/javascripts/lib/pace.min.js',
-            typed: __dirname + '/public/javascripts/lib/typed.js',
-            jquery: __dirname + '/public/javascripts/lib/jquery-1-12.min.js'
-        }*/
     },
     watchOptions: { //fix webpack watch mode does not work with commad webpack --watch
         poll: 1000,

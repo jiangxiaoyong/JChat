@@ -2,7 +2,7 @@ import React from 'react'
 import FriendListContainer from  '../containers/friendList/FriendListContainer'
 import MainBodyContainer from '../containers/chat/MainBodyContainer'
 
-let chatApp = () => (
+let App = () => (
     <div className="row row-broken">
         <FriendListContainer />
         <MainBodyContainer />
@@ -10,4 +10,4 @@ let chatApp = () => (
 
 )
 
-export default chatApp
+export default App

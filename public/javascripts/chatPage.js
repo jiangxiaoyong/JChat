@@ -1,14 +1,14 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import FriendListContainer from './components/chatApp'
+import App from './components/chatApp'
 import configureStore from './store/configureStore'
 
 let store = configureStore()
 
 render(
     <Provider store={store}>
-        <FriendListContainer/>
+        <App />
     </Provider>,
     document.getElementById('root')
 )
