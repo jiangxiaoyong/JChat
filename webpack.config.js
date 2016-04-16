@@ -10,18 +10,18 @@ module.exports = {
     devtool: "source-map", // for debugging
     entry: {
         login:[
-            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
-            'webpack/hot/only-dev-server',
+            //'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort, //for webapck hot reload
+            //'webpack/hot/only-dev-server',
             './public/javascripts/login.js'
         ],
          signup:[
-            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
-            'webpack/hot/only-dev-server',
+            //'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort, //for webpack hot reload
+            //'webpack/hot/only-dev-server',
             './public/javascripts/signup.js'
         ],
         chatPage:[
-            'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort,
-            'webpack/hot/only-dev-server',
+            //'webpack-dev-server/client?' + dockerMachineIP + ':' + webPackDevServerPort, //for webpack hot reload
+            //'webpack/hot/only-dev-server',
             './public/javascripts/chatPage.js'
         ]
 
