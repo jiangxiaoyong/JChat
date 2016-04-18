@@ -43,7 +43,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // Set listening port
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 80;
 app.set('port', port);
 
 //check redis publisher connection status
