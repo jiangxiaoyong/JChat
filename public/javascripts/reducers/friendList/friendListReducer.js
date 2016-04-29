@@ -4,7 +4,8 @@ import { REQUEST_FRIENDLIST,
         SWITCH_FRIEND_DONE,
         REFRESH_FRIEND_LIST,
         SET_ATVIE_FRIEND,
-        MSG_FROM_NON_ACTIVE_FRIEND} from '../../actions'
+        MSG_FROM_NON_ACTIVE_FRIEND,
+        SHOW_LATEST_MSG} from '../../actions'
 
 let friendListReducer = (state = {
     isFetching: true,
@@ -14,7 +15,6 @@ let friendListReducer = (state = {
     switchTo : '',
     fList: [],
     activeFriend: {'imgSrc': 'images/questionMark.png'},
-    msgFromNonActiveFriend:''
 }, action) => {
     switch (action.type) {
         case REQUEST_FRIENDLIST:
@@ -56,6 +56,12 @@ let friendListReducer = (state = {
                                         f.id === action.msgFrom ?
                                         Object.assign({}, f, { unReadMsg: true}) : f ) //show alert of unread msg right beside avatar
              })
+        case SHOW_LATEST_MSG:
+              return Object.assign({}, state, {
+                  fList: state.fList.map(f =>
+                                         f.id === action.targetFriend?
+                                         Object.assign({}, f, {msgContent: action.text}) : f) //show latest msg beside friend avatar
+              })
 
         default:
             return state

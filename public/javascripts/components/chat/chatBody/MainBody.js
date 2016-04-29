@@ -10,7 +10,8 @@ import {sendMessage,
         switchFriendDone,
         refreshFriendList,
         setActiveFriend,
-        msgFromNonActiveFriend } from '../../../actions'
+        msgFromNonActiveFriend,
+        updateLatestMsgAtFriendList} from '../../../actions'
 
 
 let socket;
@@ -24,9 +25,11 @@ class MainBody extends Component {
         socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by current user ID
             if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //only accept and show message that chatting between current user and active friend
                 dispatch(receiveMessage(msg, activeFriend))
+                dispatch(updateLatestMsgAtFriendList(msg.from, msg.text)) //show latest receiving msg beside friend avatar of active friend
                 $("html, body, div").animate({ scrollTop: 9999 },1000); //scroll down to show new message
             } else {
                 dispatch(msgFromNonActiveFriend(msg.from))//show alert of unread msg for non active user
+                dispatch(updateLatestMsgAtFriendList(msg.from, msg.text)) //show latest receiving msg beside friend avatar of non active friend
             }
 
         })
@@ -61,6 +64,7 @@ class MainBody extends Component {
             currentUser = nextProps.currentUser // store current user info
             this.handleIncomingMsg() //establish socket listener only when user info is available
             socket.emit('iam', currentUser.id); //report who i am for debugging
+            socket.emit('loadChatHistory', currentUser.id) //load chat history of all friends for showing latest msg beside avatar
         }
 
         //if(nextProps.friendListReducer.availability && !nextProps.friendListReducer.isSwitching) { //friend list is available
@@ -94,6 +98,7 @@ class MainBody extends Component {
         socket.emit('sendMsg', msg) // send message to back-end nodeJS server over socket io
         this.dispatch(reset('message')) //clear message input box
         this.dispatch(sendMessage(msg, currentUser)) //display sending message on chat record box
+        this.dispatch(updateLatestMsgAtFriendList(msg.to, msg.text)) //show latest sending msg beside friend avatar of active friend
         $("html, body, div").animate({ scrollTop: 9999 },1000)//scroll down to show new message
     }
 
