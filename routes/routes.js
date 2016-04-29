@@ -144,7 +144,11 @@ module.exports = function(app, io, pub, sub){
             })
         })
 
-
+        socket.on('loadAllChatHistory', function(id) { //load all chat history belong to current user
+            pub.LRANGE('chatHistory@' + id, 0, -1, function(err, data){
+                socket.emit('chatHistoryAllFriends', data);
+            })
+        })
 
     });
 

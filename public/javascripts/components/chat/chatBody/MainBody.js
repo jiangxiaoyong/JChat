@@ -14,9 +14,11 @@ import {sendMessage,
         updateLatestMsgAtFriendList} from '../../../actions'
 
 
-let socket;
-let activeFriend;
-let currentUser;
+let socket
+let activeFriend
+let currentUser
+let chatHistoryAllFriends = {}
+let fList
 
 class MainBody extends Component {
 
@@ -34,7 +36,7 @@ class MainBody extends Component {
 
         })
 
-        socket.on('chatHistory', function(data){
+        socket.on('chatHistory', function(data) {
             data.map(function(obj) {
                 var msg = JSON.parse(obj)
                 if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //filter chat history belong to current user and active friend
@@ -49,11 +51,44 @@ class MainBody extends Component {
             $("html, body, div").animate({ scrollTop: 9999 },1000);//scroll down to bottom of latest chat after each loading of chat history, or switching between friend
         })
 
+        socket.on('chatHistoryAllFriends', function(data) {
+            /*
+                construct an object mapping from friend id to their individual chat record
+                {
+                    id1 : [ {msg1} , {msg2}, ...],
+                    id2 : [ {msg1} , {msg2}, ...]
+                }
+             */
+            fList.map(function(f) { //loop friend list
+                chatHistoryAllFriends[f.id] = data.filter(function(obj) { //construct array of msg objects by array.filter
+                    var msg = JSON.parse(obj)
+                    if(msg.from === f.id || msg.to === f.id) return true //filtering msg belong to looping friend
+                    else return false
+                })
+            })
+
+            /*
+                loop all chat history to show latest msg beside friend avatar
+             */
+            for(var fId in chatHistoryAllFriends) {
+                var msgs = chatHistoryAllFriends[fId]
+                if(msgs.length > 0) {
+                    var latestMsg = msgs[msgs.length - 1]
+                    dispatch(updateLatestMsgAtFriendList(fId, JSON.parse(latestMsg).text))
+                } else {
+                    dispatch(updateLatestMsgAtFriendList(fId, "Start chat now"))//when there is no chat history, just showing basic info
+                }
+
+            }
+        })
+
         //listening on refresh event, server will fire this event when it finish storing new friend into corresponding friend list of user, and inform both of them
         socket.on('refreshFriendList@' + currentUser.id, function() {
             dispatch(refreshFriendList())
         })
     }
+
+
 
     componentDidMount() {
         socket = io() //connect to nodeJS server
@@ -64,15 +99,14 @@ class MainBody extends Component {
             currentUser = nextProps.currentUser // store current user info
             this.handleIncomingMsg() //establish socket listener only when user info is available
             socket.emit('iam', currentUser.id); //report who i am for debugging
-            socket.emit('loadChatHistory', currentUser.id) //load chat history of all friends for showing latest msg beside avatar
         }
 
-        //if(nextProps.friendListReducer.availability && !nextProps.friendListReducer.isSwitching) { //friend list is available
-        //    if(nextProps.friendListReducer.fList) {
-        //      activeFriend = nextProps.friendListReducer.fList[0]// store current active chatting frienda, loading the first friend in the list by default
-        //      socket.emit('loadChatHistory', currentUser.id);//load chat history between all friends and me
-        //    }
-        //}
+        if(nextProps.friendListReducer.availability != this.props.friendListReducer.availability) { //friend list is available
+            if(nextProps.friendListReducer.fList) {
+                fList = nextProps.friendListReducer.fList
+                socket.emit('loadAllChatHistory', currentUser.id);//load chat history between all friends and me
+            }
+        }
 
         /*
             initially, chat record page is empty and will be filled with content after user clicking or switching between friend
