@@ -15,7 +15,7 @@ export const ADD_FRIEND_SUCCESS = 'ADD_FRIEND_SUCCESS'
 export const ADD_FRIEND_FAILED = 'ADD_FRIEND_FAILED'
 export const REFRESH_FRIEND_LIST = 'REFRESH_FRIEND_LIST'
 export const SET_ATVIE_FRIEND = 'SET_ATVIE_FRIEND'
-export const MSG_FROM_NON_ACTIVE_FRIEND = 'MSG_FROM_NON_ACTIVE_FRIEND'
+export const SHOW_UNREAD_MSG_ALERT = 'SHOW_UNREAD_MSG_ALERT'
 export const SHOW_LATEST_MSG = 'SHOW_LATEST_MSG'
 
 
@@ -183,9 +183,9 @@ function shouldFetchFriendList(state) {
 
 }
 
-export function msgFromNonActiveFriend(msgFrom) {
+export function showUnreadMsgAlert(msgFrom) {
     return {
-        type: MSG_FROM_NON_ACTIVE_FRIEND,
+        type: SHOW_UNREAD_MSG_ALERT,
         msgFrom
     }
 }

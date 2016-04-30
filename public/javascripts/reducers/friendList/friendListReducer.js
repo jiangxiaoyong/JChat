@@ -4,7 +4,7 @@ import { REQUEST_FRIENDLIST,
         SWITCH_FRIEND_DONE,
         REFRESH_FRIEND_LIST,
         SET_ATVIE_FRIEND,
-        MSG_FROM_NON_ACTIVE_FRIEND,
+        SHOW_UNREAD_MSG_ALERT,
         SHOW_LATEST_MSG} from '../../actions'
 
 let friendListReducer = (state = {
@@ -50,7 +50,7 @@ let friendListReducer = (state = {
              return Object.assign({}, state, {
                  activeFriend: action.activeFriend
             })
-        case MSG_FROM_NON_ACTIVE_FRIEND:
+        case SHOW_UNREAD_MSG_ALERT:
              return Object.assign({}, state, {
                  fList: state.fList.map(f =>
                                         f.id === action.msgFrom ?

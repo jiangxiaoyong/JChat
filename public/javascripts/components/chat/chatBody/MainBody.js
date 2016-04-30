@@ -6,18 +6,17 @@ import io from 'socket.io-client';
 import {reset} from 'redux-form';
 import {sendMessage,
         receiveMessage,
-        resetInputBox,
         switchFriendDone,
         refreshFriendList,
         setActiveFriend,
-        msgFromNonActiveFriend,
+        showUnreadMsgAlert,
         updateLatestMsgAtFriendList} from '../../../actions'
 
 
 let socket
 let activeFriend
 let currentUser
-let chatHistoryAllFriends = {}
+let cachedChatHistoryAllFriends = {}
 let fList
 
 class MainBody extends Component {
@@ -25,30 +24,14 @@ class MainBody extends Component {
     handleIncomingMsg() {
         const {dispatch} = this.props
         socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by current user ID
-            if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //only accept and show message that chatting between current user and active friend
+            if( msg.to == currentUser.id && msg.from == activeFriend.id ) { //only accept and show message that chatting between current user and active friend
                 dispatch(receiveMessage(msg, activeFriend))
-                dispatch(updateLatestMsgAtFriendList(msg.from, msg.text)) //show latest receiving msg beside friend avatar of active friend
                 $("html, body, div").animate({ scrollTop: 9999 },1000); //scroll down to show new message
             } else {
-                dispatch(msgFromNonActiveFriend(msg.from))//show alert of unread msg for non active user
-                dispatch(updateLatestMsgAtFriendList(msg.from, msg.text)) //show latest receiving msg beside friend avatar of non active friend
+                dispatch(showUnreadMsgAlert(msg.from))//show alert of unread msg for non active user
             }
-
-        })
-
-        socket.on('chatHistory', function(data) {
-            data.map(function(obj) {
-                var msg = JSON.parse(obj)
-                if((msg.from == currentUser.id || msg.to == currentUser.id) && (msg.from == activeFriend.id || msg.to == activeFriend.id)) { //filter chat history belong to current user and active friend
-                    if(msg.from == currentUser.id) { //message that send from current user
-                        dispatch(sendMessage(msg, currentUser))
-                    }
-                    else if(msg.from == activeFriend.id) { //message that send from active friend
-                        dispatch(receiveMessage(msg, activeFriend))
-                    }
-                }
-            })
-            $("html, body, div").animate({ scrollTop: 9999 },1000);//scroll down to bottom of latest chat after each loading of chat history, or switching between friend
+            dispatch(updateLatestMsgAtFriendList(msg.from, msg.text)) //show latest receiving msg beside friend avatar
+            cachedChatHistoryAllFriends[msg.from].push(msg)//store chat history for all friends
         })
 
         socket.on('chatHistoryAllFriends', function(data) {
@@ -59,9 +42,9 @@ class MainBody extends Component {
                     id2 : [ {msg1} , {msg2}, ...]
                 }
              */
+            var msgObjs = data.map(JSON.parse)
             fList.map(function(f) { //loop friend list
-                chatHistoryAllFriends[f.id] = data.filter(function(obj) { //construct array of msg objects by array.filter
-                    var msg = JSON.parse(obj)
+                cachedChatHistoryAllFriends[f.id] = msgObjs.filter(function(msg) { //construct array of msg objects by array.filter
                     if(msg.from === f.id || msg.to === f.id) return true //filtering msg belong to looping friend
                     else return false
                 })
@@ -70,13 +53,13 @@ class MainBody extends Component {
             /*
                 loop all chat history to show latest msg beside friend avatar
              */
-            for(var fId in chatHistoryAllFriends) {
-                var msgs = chatHistoryAllFriends[fId]
+            for(var fId in cachedChatHistoryAllFriends) {
+                var msgs = cachedChatHistoryAllFriends[fId]
                 if(msgs.length > 0) {
                     var latestMsg = msgs[msgs.length - 1]
-                    dispatch(updateLatestMsgAtFriendList(fId, JSON.parse(latestMsg).text))
+                    dispatch(updateLatestMsgAtFriendList(fId, latestMsg.text))
                 } else {
-                    dispatch(updateLatestMsgAtFriendList(fId, "Start chat now"))//when there is no chat history, just showing basic info
+                    dispatch(updateLatestMsgAtFriendList(fId, "Start chatting now"))//when there is no chat history, just showing basic info
                 }
 
             }
@@ -88,7 +71,18 @@ class MainBody extends Component {
         })
     }
 
-
+    switchChatRecord() {
+         const {dispatch} = this.props
+         cachedChatHistoryAllFriends[activeFriend.id].map(function(msg) {
+            if(msg.from == currentUser.id) { //message that send from current user
+                dispatch(sendMessage(msg, currentUser))
+            }
+            else if(msg.from == activeFriend.id) { //message that send from active friend
+                dispatch(receiveMessage(msg, activeFriend))
+            }
+        })
+        $("html, body, div").animate({ scrollTop: 9999 },1000);//scroll down to bottom of latest chat after each loading of chat history, or switching between friend
+    }
 
     componentDidMount() {
         socket = io() //connect to nodeJS server
@@ -113,7 +107,7 @@ class MainBody extends Component {
          */
         if(nextProps.friendListReducer.isSwitching ) { //case of switching chatting friend
             activeFriend = nextProps.friendListReducer.fList[nextProps.friendListReducer.switchTo]
-            socket.emit('loadChatHistory', currentUser.id);
+            this.switchChatRecord()
             this.props.dispatch(setActiveFriend(activeFriend)) //set the active friend info showing on top of chatting page
             this.props.dispatch(switchFriendDone()) // set is switching flag to false to avoid entering this condition
         }
@@ -133,6 +127,7 @@ class MainBody extends Component {
         this.dispatch(reset('message')) //clear message input box
         this.dispatch(sendMessage(msg, currentUser)) //display sending message on chat record box
         this.dispatch(updateLatestMsgAtFriendList(msg.to, msg.text)) //show latest sending msg beside friend avatar of active friend
+        cachedChatHistoryAllFriends[msg.to].push(msg)//store chat history for all friends
         $("html, body, div").animate({ scrollTop: 9999 },1000)//scroll down to show new message
     }
 

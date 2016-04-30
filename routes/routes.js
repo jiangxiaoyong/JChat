@@ -138,12 +138,6 @@ module.exports = function(app, io, pub, sub){
             sub.subscribe(id) //only subscribe current user ID, friend who want to talk to me, just publishing on my ID
         })
 
-        socket.on('loadChatHistory', function(id) { //load chat history belong to current user
-            pub.LRANGE('chatHistory@' + id, 0, -1, function(err, data){
-                socket.emit('chatHistory', data);
-            })
-        })
-
         socket.on('loadAllChatHistory', function(id) { //load all chat history belong to current user
             pub.LRANGE('chatHistory@' + id, 0, -1, function(err, data){
                 socket.emit('chatHistoryAllFriends', data);
