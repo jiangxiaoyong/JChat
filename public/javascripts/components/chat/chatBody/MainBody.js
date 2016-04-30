@@ -24,7 +24,7 @@ class MainBody extends Component {
     handleIncomingMsg() {
         const {dispatch} = this.props
         socket.on('receiveMsg@' + currentUser.id, function(msg){ //only accept message that send to me specified by current user ID
-            if( msg.to == currentUser.id && msg.from == activeFriend.id ) { //only accept and show message that chatting between current user and active friend
+            if(activeFriend && msg.to == currentUser.id && msg.from == activeFriend.id ) { //only accept and show message that chatting between current user and active friend
                 dispatch(receiveMessage(msg, activeFriend))
                 $("html, body, div").animate({ scrollTop: 9999 },1000); //scroll down to show new message
             } else {
