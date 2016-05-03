@@ -1,0 +1,59 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "node",
+      "host": {
+        "sourcePath": "/var/app/current"
+      }
+    }
+  ],
+  "containerDefinitions": [
+   {
+      "name": "node",
+      "image": "node",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "mongo","redis"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "node",
+          "containerPath": "/app",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "mongo",
+      "image": "mongo",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 27017,
+          "containerPort": 27017
+        }
+      ]
+   },
+   {
+      "name": "redis",
+      "image": "redis",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 6379,
+          "containerPort": 6379
+        }
+      ]
+    }
+  ]
+}
