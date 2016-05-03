@@ -9,10 +9,10 @@ body{
     padding-top: 0px;
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 110px;
+    /*padding-bottom: 110px;*/
 }
 .chat {
-    height: calc(100vh - 110px);
+    height: calc(100vh - 215px);
 }
 .decor-default {
     background-color: #ffffff;
@@ -197,8 +197,8 @@ body{
 
 
 .bottom_wrapper {
-    position: absolute;
-    width: 97%;
+    position: relative;
+    width: 100%;
     background-color: #fff;
     padding: 20px 20px;
     bottom: 0;

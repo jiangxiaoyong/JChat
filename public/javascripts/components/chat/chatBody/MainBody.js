@@ -147,11 +147,10 @@ class MainBody extends Component {
                          <MessageContainer />
                      </div>
                   </div>
-                  { activeFriend ? <div className='bottom_wrapper animated bounceIn'>
-                                          <InputBoxContainer handleSendMsg = {this.handleSendMsg} />
-                                   </div>
-                                 : ''
-                  }
+
+                  <div className='bottom_wrapper animated bounceIn'>
+                      <InputBoxContainer handleSendMsg = {this.handleSendMsg} />
+                  </div>
              </div>
          )
     }
