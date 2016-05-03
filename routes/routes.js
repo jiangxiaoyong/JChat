@@ -52,18 +52,10 @@ module.exports = function(app, io, pub, sub){
                     unReadMsg: item.unReadMsg
                 })
             })
-        }).then(function(){
-
-             //establish chatting channels with all friend when user fetch their own friend list
-            //buildChatChannels(sub, list);
-
-            res.contentType('application/json');
             res.send(JSON.stringify(
                 list
             ))
-        });
-
-
+        })
 
     })
 
