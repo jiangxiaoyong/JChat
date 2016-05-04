@@ -208,7 +208,7 @@ body{
     height: 50px;
     border-radius: 25px;
     border: 1px solid #bcbdc0;
-    width: calc(100% - 160px);
+    width: calc(100% - 108px);
     position: relative;
     padding: 0 20px;
 }
@@ -222,7 +222,7 @@ body{
     color: gray;
 }
 .bottom_wrapper .send_message {
-    width: 140px;
+    width: 100px;
     height: 50px;
     display: inline-block;
     border-radius: 50px;
