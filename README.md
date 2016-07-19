@@ -20,9 +20,9 @@ $ docker run --name redis --expose 6379 -p 6379:6379 -d redis
 ```
 $ docker run -it --name node --link redis:redis --link mongodb:mongodb -p 3000:3000 -p 8080:8080 -p 8989:8989 -v /Users/jxy/IdeaProjects/JChat/:/app -d node
 ```
-  - port 3000: webpack hot reload
-  - port 8080: nodejs app
-  - port 8989: nodejs debugger port
+ - port 3000: webpack hot reload
+ - port 8080: nodejs app
+ - port 8989: nodejs debugger port
 - install webpack globally `npm install webpack -g` at root of node container
 - change listening port 80 at file app.js to 8080 for development environment
 - run `webpack` at /app to build module bundle
@@ -36,7 +36,7 @@ Set up WebPack at Development Environment
 ```
 npm install webpack-dev-server -g
 ```
-- uncomment lines marked as 'uncomment' in webpack config file
+- uncomment lines marked as `uncomment` in webpack config file
 - run WebPack development server in the node container to start hot reload
 ```
 webpack-dev-server --hot --inline
