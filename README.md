@@ -1,6 +1,6 @@
 Running instructions
 ===============================================
-Set up Docker environment
+Set up Docker for Running Environment
 -----------------------------------------------
 - Download official docker image from docker hub
 ```
@@ -18,19 +18,20 @@ $ docker run --name redis --expose 6379 -p 6379:6379 -d redis
 ```
 - Run docker nodejs and link to redis and mongodb
 ```
-$ docker run -it --name node --link redis:redis --link mongodb:mongodb -p 3000:3000 -p 8080:8080 -p 8989:8989 -v /Users/jxy/IdeaProjects/JChat/:/app -d node
+$ docker run -it --name node --link redis:redis --link mongodb:mongodb -p 3000:3000 -p 8080:8080 -p 8989:8989 -v /path/to/your/working/directory/:/app -d node
 ```
 - port 3000: webpack hot reload
 - port 8080: nodejs app
 - port 8989: nodejs debugger port
-- install webpack globally `npm install webpack -g` at root of node container
-- change listening port 80 at file app.js to 8080 for development environment
-- run `webpack` at /app to build module bundle
-- run `npm install` at /app folder to install all model dependencies
-- run 'npm start' at /app folder to run node app
-- done!
+- note your node container ID by running `docker ps -a` then run command `docker exec -it <container ID> /bin/bash` (on Mac) to go inside the node container
+- install webpack globally `npm install webpack -g` at the root of the node container
+- change listening port 80 in file app.js at line 46 to 8080 for development environment
+- run `webpack` from /app to build module bundle
+- run `npm install` from /app folder to install all model dependencies
+- run 'npm start' from /app folder to run node app
+- done! Now you are browse to `http://localhost:8080` to sign up JChat anc start to chat with your friends!
 
-Set up WebPack at Development Environment
+Set up WebPack for Development Environment
 ------------------------------------------------
 - install WebPack Development Server in the node container
 ```
