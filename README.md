@@ -1,5 +1,12 @@
 Running instructions
 ===============================================
+
+Overview
+-----------------------------------------------
+It's an real-time chatting web app, that supporting chatting between multiple friends, adding friends, storing chatting history and caching offline message. [let's play](http://www.jchatting.com)
+
+Here is [my post](https://jiangxiaoyong.github.io/portfolio/jchat/) about this project, which includes project architecture, design and summary
+
 Set up Docker for Running Environment
 -----------------------------------------------
 - Download official docker image from docker hub
